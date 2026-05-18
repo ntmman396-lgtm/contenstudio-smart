@@ -166,6 +166,14 @@ const DEFAULT_RULES: UnifiedRule[] = [
     is_active: true, is_system: true, auto_fixable: false, fix_instruction: '',
     applies_to: ['*'], check_type: 'structural',
   },
+  {
+    code: 'T-SEO-INTRO', name: 'Đoạn mở đầu trước H2 ngắn gọn',
+    description: 'Đoạn dẫn nhập trước H2 đầu tiên phải ngắn gọn (tối đa 1 đoạn văn <p> và ≤100 từ).',
+    section: 'TECH', sub_dimension: 'seo',
+    deduction: 3, max_deduction: 5, severity: 'warning',
+    is_active: true, is_system: true, auto_fixable: false, fix_instruction: '',
+    applies_to: ['*'], check_type: 'structural',
+  },
 
   // ═══════════════ CONTENT / ACCURACY (max 40) ═══════════════
   {

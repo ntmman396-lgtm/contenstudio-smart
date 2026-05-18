@@ -413,6 +413,54 @@ function checkSEO(content: string, rules: Map<string, UnifiedRule>, article?: an
     }
   }
 
+  // 5. Intro section before first H2 is short
+  const rIntro = getRule(rules, 'T-SEO-INTRO');
+  if (rIntro.is_active) {
+    const isQA = article?.templateId === 'hoi-dap-bac-si' || article?.templateId === 'hoi-dap';
+    if (!isQA) {
+      const firstH2Index = content.toLowerCase().indexOf('<h2');
+      const introHtml = firstH2Index !== -1 ? content.substring(0, firstH2Index) : content;
+      
+      const introParagraphs = [...introHtml.matchAll(/<p[^>]*>/gi)].length;
+      const introWords = stripHtml(introHtml).split(/\s+/).filter(Boolean).length;
+      
+      if (introParagraphs > 1 || introWords > 100) {
+        const deduction = rIntro.deduction;
+        score -= deduction;
+        
+        let reason = '';
+        if (introParagraphs > 1 && introWords > 100) {
+          reason = `Đoạn mở đầu có ${introParagraphs} đoạn văn và dài ${introWords} từ`;
+        } else if (introParagraphs > 1) {
+          reason = `Đoạn mở đầu chia làm ${introParagraphs} đoạn văn (chỉ được tối đa 1 đoạn)`;
+        } else {
+          reason = `Đoạn mở đầu dài ${introWords} từ (tối đa 100 từ)`;
+        }
+        
+        findings.push({ 
+          rule_code: 'T-SEO-INTRO', 
+          passed: false, 
+          deduction, 
+          severity: rIntro.severity, 
+          layer: 'tech', 
+          sub: 'seo', 
+          detail: reason 
+        });
+        manualRequired.push({ 
+          name: 'Đoạn mở đầu trước H2 quá dài', 
+          text: reason, 
+          severity: rIntro.severity, 
+          deduction, 
+          layer: 'tech', 
+          sub: 'seo', 
+          suggestion: 'Rút gọn phần mở đầu trước thẻ H2 đầu tiên thành 1 đoạn duy nhất (thẻ <p>), tối đa 2-3 câu (≤ 100 từ) để dẫn dắt trực tiếp vào chủ đề chính.' 
+        });
+      } else {
+        findings.push({ rule_code: 'T-SEO-INTRO', passed: true, deduction: 0, severity: 'info', layer: 'tech', sub: 'seo' });
+      }
+    }
+  }
+
   return { score: Math.max(score, 0), findings, manualRequired };
 }
 

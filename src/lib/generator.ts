@@ -105,22 +105,23 @@ QUY TẮC OUTPUT:
 5. KHÔNG bịa thông tin không có trong tài liệu nguồn.
 6. KHÔNG bọc JSON trong code block.
 7. ĐỘ DÀI ĐOẠN VĂN: Để tối ưu trải nghiệm đọc, MỖI ĐOẠN VĂN (<p>) TUYỆT ĐỐI CHỈ ĐƯỢC CHỨA TỐI ĐA 2-3 CÂU (tương đương 3-4 dòng). Bắt buộc phải ngắt đoạn thường xuyên, không viết đoạn văn dài lê thê.
-8. QUY CHUẨN TRÌNH BÀY NGUỒN THAM KHẢO (BẮT BUỘC TUÂN THỦ TRONG MẢNG REFERENCES):
+8. ĐỘ DÀI ĐOẠN MỞ ĐẦU (TRƯỚC H2 ĐẦU TIÊN): Phần mở đầu dẫn dắt vào bài viết (nằm ở đầu tiên trong trường "content", trước thẻ <h2> đầu tiên) BẮT BUỘC chỉ được chứa tối đa 1 đoạn văn (chỉ duy nhất 1 thẻ <p>), độ dài cực kỳ ngắn gọn từ 2-3 câu (tổng số ≤100 từ). Tuyệt đối KHÔNG viết lan man hay tạo nhiều đoạn văn trước khi vào heading H2 đầu tiên.
+9. QUY CHUẨN TRÌNH BÀY NGUỒN THAM KHẢO (BẮT BUỘC TUÂN THỦ TRONG MẢNG REFERENCES):
    - Tuyệt đối KHÔNG sử dụng những link bị 404 hay link ảo không thể truy cập được.
    - Đối với Nguồn dạng sách/giáo trình: "Tác giả (năm). Tên tài liệu. Nơi xuất bản: Nhà xuất bản." (VD: Bộ Y tế (2020). Hướng dẫn chẩn đoán và điều trị... Hà Nội: NXB Y học)
    - Đối với Nguồn dạng website: "Tên nguồn - Tiêu đề: URL (truy cập ngày [NGÀY_HIỆN_TẠI])" (VD: WHO. Tăng huyết áp. https://... (truy cập ngày ${new Date().toLocaleDateString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' })}))
      + LƯU Ý QUAN TRỌNG 1: URL bắt buộc phải là link trực tiếp trỏ đến trang chi tiết của bài viết/nguồn đó (deep link), TUYỆT ĐỐI KHÔNG chỉ dẫn link về trang chủ (homepage) chung chung.
      + LƯU Ý QUAN TRỌNG 2: Cho phần Ngoặc đơn chứa ngày truy cập, BẮT BUỘC toàn bộ các nguồn website phải ghi chính xác là: "(truy cập ngày ${String(new Date().getDate()).padStart(2, '0')}/${String(new Date().getMonth() + 1).padStart(2, '0')}/${new Date().getFullYear()})" - TUYỆT ĐỐI KHÔNG tự bịa ngày tháng trong quá khứ!
-9. CẤM HOÀN TOÀN IN ĐẬM TRONG NỘI DUNG:
+10. CẤM HOÀN TOÀN IN ĐẬM TRONG NỘI DUNG:
    - TUYỆT ĐỐI KHÔNG sử dụng thẻ <strong>, <b>, hoặc bất kỳ cách in đậm nào bên trong nội dung đoạn văn <p>.
    - KHÔNG có ngoại lệ nào: không bold tên bệnh, không bold tên hoạt chất, không bold tên khoa học, không bold lời khuyên, không bold bất kỳ thứ gì bên trong đoạn văn.
    - Nếu cần nhấn mạnh thông tin quan trọng, hãy dùng danh sách gạch đầu dòng (<ul><li>) hoặc viết thành heading (<h3>) — KHÔNG BAO GIỜ dùng bold.
    - Toàn bộ text bên trong thẻ <p> phải là văn bản thuần (plain text), chỉ được phép dùng <em> (in nghiêng) và <a> (hyperlink) bên trong <p>.
-10. QUY TẮC LIÊN KẾT NỘI BỘ (INTERNAL LINK) GIỮA CÁC SITE:
+11. QUY TẮC LIÊN KẾT NỘI BỘ (INTERNAL LINK) GIỮA CÁC SITE:
     - Bài viết này đang được tạo cho site: ${settings.siteId === 'nha-thuoc' ? 'NHÀ THUỐC' : 'TIÊM CHỦNG'}.
     - TUYỆT ĐỐI KHÔNG chèn link chéo giữa hai hệ thống. Nghĩa là: Bài viết của Nhà Thuốc CẤM dẫn link sang Tiêm Chủng, và bài viết của Tiêm Chủng CẤM dẫn link sang Nhà Thuốc.
 ${settings.templateId === 'hoi-dap-bac-si' || settings.templateId === 'hoi-dap' ? `
-11. ĐỊNH DẠNG HỎI ĐÁP SỨC KHỎE (BẮT BUỘC):
+12. ĐỊNH DẠNG HỎI ĐÁP SỨC KHỎE (BẮT BUỘC):
    - KHÔNG sử dụng thẻ heading <h2> cho phần Câu hỏi và Giải đáp. THAY VÀO ĐÓ, bắt buộc dùng cấu trúc sau:
    <p><strong>Câu hỏi:</strong></p>
    <blockquote>
@@ -138,7 +139,7 @@ JSON schema bắt buộc:
   "slug": "string",
   "sapo": "string <300 ký tự, mô tả ngắn gọn về chủ đề",
   "content": "string — TOÀN BỘ HTML nội dung bài viết, đầy đủ chi tiết >=${settings.minWords} từ",
-  "references": ["danh sách nguồn tham khảo ứng dụng ĐÚNG quy chuẩn số 8"],
+  "references": ["danh sách nguồn tham khảo ứng dụng ĐÚNG quy chuẩn số 9"],
   "seoMeta": { "title": "≤60 ký tự", "description": "≤160 ký tự" },
   "category": "${categoryValue}",
   "tags": ${userTags && userTags.length > 0 ? JSON.stringify(userTags) : '["tag1", "tag2"]'},
