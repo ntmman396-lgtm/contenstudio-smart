@@ -265,7 +265,7 @@ export async function generateSingleArticle(
   });
 
   const response = await client.models.generateContent({
-    model: process.env.GEMINI_GENERATOR_MODEL || 'gemini-2.5-flash',
+    model: process.env.GEMINI_GENERATOR_MODEL || 'gemini-2.5-pro',
     contents: userPrompt,
     config: {
       systemInstruction: systemPrompt,
