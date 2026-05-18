@@ -52,7 +52,7 @@ ${sourceSnippet ? `Nguồn tham khảo:\n${sourceSnippet}` : ''}
 Hãy viết lại section này tốt hơn, đầy đủ hơn, chuẩn y khoa hơn. Trả về HTML content.`;
 
     const response = await client.models.generateContent({
-      model: 'gemini-3.1-pro-preview',
+      model: 'gemini-1.5-pro',
       contents: userPrompt,
       config: {
         systemInstruction: systemPrompt,

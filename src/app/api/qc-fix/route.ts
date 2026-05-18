@@ -86,7 +86,7 @@ Hãy sửa TẤT CẢ các lỗi trên và trả về toàn bộ bài viết HTM
 
     const client = new GoogleGenAI({ apiKey });
     const response = await client.models.generateContent({
-      model: 'gemini-3.1-pro-preview',
+      model: 'gemini-1.5-pro',
       contents: userPrompt,
       config: {
         systemInstruction: FIX_SYSTEM_PROMPT,

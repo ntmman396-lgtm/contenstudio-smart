@@ -3,7 +3,7 @@ import { prisma } from '@/lib/prisma';
 import { runQC } from '@/lib/qc/engine';
 import { SafetyQCEngine } from '@/lib/qc/safety-engine';
 
-export const maxDuration = 60;
+export const maxDuration = 30;
 
 // Helper: parse JSON string back to object
 function fromJson(value: string | null): any {

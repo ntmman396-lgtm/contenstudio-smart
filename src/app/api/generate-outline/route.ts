@@ -88,7 +88,7 @@ H3: [Tên Sub-heading]
     const userPrompt = `Hãy lên dàn ý chi tiết cho bài viết với chủ đề/từ khóa: "${topic}"`;
 
     const response = await client.models.generateContent({
-      model: 'gemini-3.1-pro-preview',
+      model: 'gemini-1.5-pro',
       contents: userPrompt,
       config: {
         systemInstruction: systemPrompt,
