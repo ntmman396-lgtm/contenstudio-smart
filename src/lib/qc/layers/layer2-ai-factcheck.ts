@@ -99,7 +99,7 @@ export async function runAIFactCheck(htmlContent: string): Promise<AIFactCheckRe
     const client = new GoogleGenAI({ apiKey });
 
     const response = await client.models.generateContent({
-      model: 'gemini-1.5-pro',
+      model: 'gemini-2.5-flash',
       contents: `Hãy fact-check bài viết y khoa sau:\n\n---\n${plainText}\n---`,
       config: {
         systemInstruction: SYSTEM_PROMPT,

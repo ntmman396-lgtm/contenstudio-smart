@@ -67,7 +67,7 @@ CHỈ TRẢ VỀ JSON, KHÔNG CẦN CHÚ THÍCH THÊM.`;
     const userPrompt = `===== TÀI LIỆU NGUỒN =====\n${sourceText}\n===== HẾT TÀI LIỆU =====\n\nHãy lập mảng JSON chứa kế hoạch cho ${articleCount} bài.`;
 
     const response = await client.models.generateContent({
-      model: 'gemini-1.5-pro',
+      model: 'gemini-2.5-flash',
       contents: userPrompt,
       config: {
         systemInstruction: systemPrompt,

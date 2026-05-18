@@ -176,7 +176,7 @@ export async function ingestSource(
     
     let topicTags: string[] = [];
     try {
-       const tagModel = genAI.getGenerativeModel({ model: 'gemini-1.5-pro' });
+       const tagModel = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
        const tagRes = await tagModel.generateContent(autoTagPrompt);
        topicTags = tagRes.response.text().split(',').map(t => t.trim());
     } catch (e) {

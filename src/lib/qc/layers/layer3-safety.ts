@@ -72,7 +72,7 @@ export async function runLayer3aRiskPrecheck(content: string): Promise<RiskAnaly
 
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-1.5-flash',
+      model: 'gemini-2.5-flash',
       contents: RISK_PRECHECK_PROMPT + "\\n\\nArticle Content:\\n" + content
     });
     
@@ -141,7 +141,7 @@ export async function runLayer3bSafetyEnforcement(content: string): Promise<Safe
 
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-1.5-flash',
+      model: 'gemini-2.5-flash',
       contents: SAFETY_ENFORCEMENT_PROMPT + "\\n\\nArticle Content:\\n" + content
     });
     
