@@ -1,0 +1,177 @@
+﻿  Γû▓ Next.js 14.2.35
+  - Environments: .env.local
+
+   Creating an optimized production build ...
+ Γ£ô Compiled successfully
+   Linting and checking validity of types ...
+node.exe : 
+At C:\Program 
+Files\nodejs\npx.ps1:29 
+char:3
++   & $NODE_EXE 
+$NPX_CLI_JS $args
++   ~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~
+    + CategoryInfo         
+     : NotSpecified: (:St  
+  ring) [], RemoteExcept   
+ ion
+    + FullyQualifiedErrorI 
+   d : NativeCommandError
+ 
+Failed to compile.
+
+./src/app/api/batch-plan/ro
+ute.ts
+77:21  Error: Unexpected 
+any. Specify a different 
+type.  @typescript-eslint/n
+o-explicit-any
+107:45  Error: Unexpected 
+any. Specify a different 
+type.  @typescript-eslint/n
+o-explicit-any
+
+./src/app/review/page.tsx
+129:56  Error: '_fields' 
+is defined but never used. 
+ @typescript-eslint/no-unus
+ed-vars
+135:59  Error: '_fields' 
+is defined but never used. 
+ @typescript-eslint/no-unus
+ed-vars
+344:75  Error: Unexpected 
+any. Specify a different 
+type.  @typescript-eslint/n
+o-explicit-any
+
+./src/app/templates/page.ts
+x
+531:17  Error: 'e' is 
+defined but never used.  @t
+ypescript-eslint/no-unused-
+vars
+
+./src/components/BatchGener
+ator.tsx
+4:49  Error: 
+'GeneratedArticle' is 
+defined but never used.  @t
+ypescript-eslint/no-unused-
+vars
+164:21  Error: Unexpected 
+any. Specify a different 
+type.  @typescript-eslint/n
+o-explicit-any
+
+./src/components/review/Det
+ailShared.tsx
+4:36  Error: 'Editor' is 
+defined but never used.  @t
+ypescript-eslint/no-unused-
+vars
+
+./src/components/review/lay
+outs/BenhLyDetail.tsx
+6:25  Error: 
+'RelationField' is defined 
+but never used.  @typescrip
+t-eslint/no-unused-vars
+
+./src/components/review/lay
+outs/DuocChatDetail.tsx
+6:25  Error: 
+'RelationField' is defined 
+but never used.  @typescrip
+t-eslint/no-unused-vars
+
+./src/components/review/Tag
+CategoryManager.tsx
+3:46  Error: 'useCallback' 
+is defined but never used. 
+ @typescript-eslint/no-unus
+ed-vars
+386:10  Error: 
+'dropdownOpen' is assigned 
+a value but never used.  @t
+ypescript-eslint/no-unused-
+vars
+
+./src/components/Sidebar.ts
+x
+31:45  Error: Unexpected 
+any. Specify a different 
+type.  @typescript-eslint/n
+o-explicit-any
+
+./src/components/SingleGene
+rator.tsx
+45:16  Error: 'e' is 
+defined but never used.  @t
+ypescript-eslint/no-unused-
+vars
+52:16  Error: 'e' is 
+defined but never used.  @t
+ypescript-eslint/no-unused-
+vars
+
+./src/lib/generator.ts
+38:9  Error: 
+'requiredFields' is 
+assigned a value but never 
+used.  @typescript-eslint/n
+o-unused-vars
+
+./src/lib/source-extractor.
+ts
+9:55  Error: Unexpected 
+any. Specify a different 
+type.  @typescript-eslint/n
+o-explicit-any
+
+./src/lib/storage.ts
+1:28  Error: 
+'BatchPlanItem' is defined 
+but never used.  @typescrip
+t-eslint/no-unused-vars
+4:7  Error: 
+'BATCH_JOBS_KEY' is 
+assigned a value but never 
+used.  @typescript-eslint/n
+o-unused-vars
+12:12  Error: 'e' is 
+defined but never used.  @t
+ypescript-eslint/no-unused-
+vars
+
+./src/lib/templates.ts
+258:7  Error: 'VACCINE_LE' 
+is assigned a value but 
+never used.  @typescript-es
+lint/no-unused-vars
+340:7  Error: 
+'VACCINE_GOI' is assigned 
+a value but never used.  @t
+ypescript-eslint/no-unused-
+vars
+423:7  Error: 'THUOC' is 
+assigned a value but never 
+used.  @typescript-eslint/n
+o-unused-vars
+540:7  Error: 'NON_THUOC' 
+is assigned a value but 
+never used.  @typescript-es
+lint/no-unused-vars
+
+./src/types/index.ts
+15:13  Error: Unexpected 
+any. Specify a different 
+type.  @typescript-eslint/n
+o-explicit-any
+
+info  - Need to disable 
+some ESLint rules? Learn 
+more here: https://nextjs.o
+rg/docs/basic-features/esli
+nt#disabling-rules

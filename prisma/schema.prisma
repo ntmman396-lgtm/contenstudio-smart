@@ -1,0 +1,263 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String    @id @default(uuid())
+  email       String    @unique
+  name        String
+  role        String    // superadmin | lead | btv | ctv | hdyk | bs
+  password    String    // hashed with scrypt
+  isActive    Boolean   @default(true)
+  specialties String?   // JSON array — dành cho role bs
+  capacity    Int?      // giới hạn số bài BS nhận đồng thời
+  createdBy   String?   // userId của người tạo account này
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  sessions    Session[]
+
+  @@index([role])
+  @@map("users")
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([token])
+  @@index([userId])
+  @@map("sessions")
+}
+
+model Article {
+  id                    String   @id @default(uuid())
+  title                 String
+  slug                  String   @unique
+  sapo                  String?
+  content               String?
+  references            String?    // JSON string - String array
+  seoMeta               String?    // JSON string - Object { title, description }
+  category              String?
+  tags                  String?    // JSON string - String array
+  templateId            String
+  templateName          String
+  siteId                String   @default("nha-thuoc")
+  status                String   @default("pending_review")
+  createdAt             DateTime @default(now())
+  syncedAt              DateTime?
+  rawFields             String?    // JSON string - Record<string, string>
+  citationReport        String?    // JSON string
+  citationVerification  String?    // JSON string - CitationVerification[]
+
+  // ─── RBAC Workflow (độc lập với QC/generation flow) ───────────
+  workflowStatus        String   @default("draft")
+  // draft | pending_bs_review | under_review | needs_revision | cta_pending | published | closed
+  createdBy             String?  // userId CTV tạo bài
+  assignedCtvId         String?  // userId CTV được BTV assign
+  assignedBsId          String?  // userId BS được HĐYK assign
+  specialty             String?  // chuyên khoa (auto-detect hoặc manual)
+  rejectionReason       String?  // lý do BS từ chối (bắt buộc khi reject)
+  revisionChecklist     String?  // JSON — checklist BS ghi khi từ chối
+  inlineComments        String?  // JSON — comment inline của BS
+  revisionCount         Int      @default(0)
+  ctaContent            String?  // nội dung CTA CTV thêm
+  publishedAt           DateTime?
+  closedAt              DateTime?
+  closedBy              String?  // userId HĐYK hoặc Lead đóng bài
+  assignedBy            String?  // userId người thực hiện assign
+  approvedBy            String?  // userId người duyệt bài (chuyển sang approved/cta)
+
+  // QC Fields
+  qcScore               Float?
+  qcGrade               String?
+  qcBadge               String?
+  qcAutoFixes           Int?     @default(0)
+  qcManualIssues        Int?     @default(0)
+  qcSyncBlocked         Boolean? @default(false)
+  qcBlockedBy           String?    // JSON string - String array
+  qcBlockedReason       String?
+  qcLastRun             DateTime?
+  qcTechScore           String?    // JSON string
+  qcTechGrade           String?
+  qcContentScore        String?    // JSON string
+  qcContentGrade        String?
+  qcContentReviewerNote String?
+
+  // Layer 3: Risk & Safety
+  qcRiskScore           Float?
+  qcSafetyScore         Float?
+  qcFinalSafetyIndex    Float?
+  qcDecision            String?
+  qcRiskLevel           String?
+  qcFindings            String?    // JSON string - deduction findings array
+
+  @@index([status])
+  @@index([workflowStatus])
+  @@index([templateId])
+  @@index([siteId])
+  @@index([createdBy])
+  @@index([assignedBsId])
+  @@map("articles")
+}
+
+model Category {
+  id        String   @id @default(uuid())
+  name      String
+  siteId    String   @default("nha-thuoc")
+  createdAt DateTime @default(now())
+
+  @@unique([name, siteId])
+  @@index([siteId])
+  @@map("categories")
+}
+
+model Tag {
+  id        String   @id @default(uuid())
+  name      String
+  siteId    String   @default("nha-thuoc")
+  createdAt DateTime @default(now())
+
+  @@unique([name, siteId])
+  @@index([siteId])
+  @@map("tags")
+}
+
+model InternalLink {
+  id        String   @id @default(uuid())
+  anchor    String
+  url       String
+  siteId    String   @default("nha-thuoc")
+  createdAt DateTime @default(now())
+
+  @@unique([anchor, siteId])
+  @@index([siteId])
+  @@map("internal_links")
+}
+
+model Template {
+  id             String   @id
+  name           String
+  icon           String?
+  stepCount      Int      @default(0)
+  steps          String?  // JSON string
+  estimatedWords String?  // JSON string {min, max}
+  systemPrompt   String?
+  outline        String?  // JSON string
+  requiredFields String?  // JSON string
+  notes          String?  // JSON string
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@map("templates")
+}
+
+model KbSource {
+  id              String   @id
+  title           String
+  sourceType      String   // 'pdf' | 'url' | 'manual'
+  scope           String?  // 'general' | 'specific'
+  originUrl       String?
+  filePath        String?
+  extractedText   String?
+  fileSizeKb      Int?
+  pageCount       Int?
+  language        String?
+  publisher       String?
+  publishYear     Int?
+  topicTags       String?  // JSON array
+  templateTags    String?  // JSON array
+  siteId          String   @default("nha-thuoc")
+  status          String   // 'processing' | 'ready' | 'error' | 'deactivated'
+  chunkCount      Int      @default(0)
+  isActive        Boolean  @default(true)
+  uploadedBy      String?
+  createdAt       DateTime @default(now())
+  lastIndexedAt   DateTime?
+  errorMsg        String?
+
+  @@index([siteId])
+  @@map("kb_sources")
+}
+
+model KbChunk {
+  id             String   @id
+  sourceId       String
+  chunkIndex     Int
+  content        String
+  contentLength  Int
+  pageNumber     Int?
+  sectionHeading String?
+  metadata       String?  // JSON
+  createdAt      DateTime @default(now())
+
+  @@index([sourceId])
+  @@map("kb_chunks")
+}
+
+model KbCitationLog {
+  id                 String   @id @default(uuid())
+  articleId          String
+  articleTitle       String
+  date               DateTime @default(now())
+  totalCitations     Int      @default(0)
+  kbCitations        Int      @default(0)
+  externalCitations  Int      @default(0)
+  unverified         Int      @default(0)
+  transparencyNotes  String?  // JSON string array
+  status             String   // 'pending' | 'reviewed'
+
+  @@map("kb_citation_logs")
+}
+
+model QcRule {
+  id            String   @id @default(uuid())
+  code          String   @unique
+  name          String
+  description   String
+  section       String
+  subDimension  String
+  deduction     Int
+  maxDeduction  Int
+  severity      String
+  isActive      Boolean  @default(true)
+  isSystem      Boolean  @default(false)
+  autoFixable   Boolean  @default(false)
+  fixInstruction String
+  appliesTo     String   // JSON string array
+  checkType     String   
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("qc_rules")
+}
+
+model WorkflowLog {
+  id          String   @id @default(uuid())
+  articleId   String
+  action      String   // submit | approve | reject | request_revision | override_approve | close | reassign_bs | assign_bs
+  fromStatus  String   // workflowStatus trước khi action
+  toStatus    String   // workflowStatus sau khi action
+  actorId     String   // userId người thực hiện
+  actorName   String   // tên người thực hiện (denormalized for display)
+  actorRole   String   // role người thực hiện
+  note        String?  // ghi chú (rejectionReason hoặc comment)
+  createdAt   DateTime @default(now())
+
+  @@index([articleId])
+  @@map("workflow_logs")
+}
