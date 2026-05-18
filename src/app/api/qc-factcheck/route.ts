@@ -20,7 +20,15 @@ function deserializeArticle(row: any): any {
     references: fromJson(row.references) ?? [],
     seoMeta: fromJson(row.seoMeta),
     tags: fromJson(row.tags) ?? [],
+    rawFields: fromJson(row.rawFields),
+    citationReport: fromJson(row.citationReport),
+    citationVerification: fromJson(row.citationVerification),
+    qcBlockedBy: fromJson(row.qcBlockedBy),
+    qcTechScore: fromJson(row.qcTechScore),
+    qcContentScore: fromJson(row.qcContentScore),
     qcFindings: fromJson(row.qcFindings),
+    revisionChecklist: fromJson(row.revisionChecklist),
+    inlineComments: fromJson(row.inlineComments),
   };
 }
 

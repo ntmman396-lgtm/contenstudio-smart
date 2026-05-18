@@ -2,7 +2,21 @@ import React from 'react';
 import { GeneratedArticle, CitationVerification } from '@/types';
 
 export default function CitationBadges({ article }: { article: GeneratedArticle }) {
-  if (!article.citationVerification || article.citationVerification.length === 0) return null;
+  const rawVerification = article.citationVerification;
+  let verifications: CitationVerification[] = [];
+
+  if (Array.isArray(rawVerification)) {
+    verifications = rawVerification;
+  } else if (typeof rawVerification === 'string') {
+    try {
+      const parsed = JSON.parse(rawVerification);
+      if (Array.isArray(parsed)) {
+        verifications = parsed;
+      }
+    } catch (e) {}
+  }
+
+  if (verifications.length === 0) return null;
 
   return (
     <div className="mt-4 pt-4 border-t border-[var(--border-default)]">
@@ -10,7 +24,7 @@ export default function CitationBadges({ article }: { article: GeneratedArticle 
         Trạng Thái Link Tham Khảo (Auto-Verified)
       </h4>
       <div className="space-y-2">
-        {article.citationVerification.map((verify: CitationVerification, i: number) => {
+        {verifications.map((verify: CitationVerification, i: number) => {
           let badge = null;
           if (verify.status === 'verified') {
             badge = <span className="text-[10px] bg-emerald-500/10 text-emerald-400 px-1.5 py-0.5 rounded border border-emerald-500/20 font-medium">✅ Sống (có nội dung)</span>;
