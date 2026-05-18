@@ -404,6 +404,21 @@ function ReviewQueueContent() {
     }
   };
 
+  const handleBulkDelete = async () => {
+    if (selectedArticleIds.length === 0) return;
+    if (window.confirm(`Bạn có chắc chắn muốn xóa ${selectedArticleIds.length} bài viết đã chọn? Hành động này không thể hoàn tác.`)) {
+      try {
+        await Promise.all(selectedArticleIds.map(id => deleteArticleFromStorage(id)));
+        updateArticlesState(prev => prev.filter(a => !selectedArticleIds.includes(a.id)));
+        setSelectedArticleIds([]);
+        window.dispatchEvent(new Event('storage')); // trigger sidebar update
+        alert('Đã xóa các bài viết thành công!');
+      } catch (err) {
+        alert('Lỗi khi xóa hàng loạt: ' + err);
+      }
+    }
+  };
+
   const toggleSelection = (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
     setSelectedArticleIds(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
@@ -762,6 +777,15 @@ function ReviewQueueContent() {
                 >
                   {isSyncing ? '⏳ Đang đẩy...' : '🚀 Strapi'}
                 </button>
+                {user && ['superadmin', 'lead', 'btv'].includes(user.role) && (
+                  <button
+                    onClick={handleBulkDelete}
+                    className="px-3 py-1.5 text-xs font-bold rounded-lg bg-red-500/10 text-red-400 border border-red-500/20 hover:bg-red-500/20 transition-colors"
+                    title="Xóa tất cả các bài viết đã chọn"
+                  >
+                    🗑️ Xóa đã chọn
+                  </button>
+                )}
               </div>
             </div>
           )}
@@ -1290,6 +1314,21 @@ function ReviewQueueContent() {
                           ✏️
                         </button>
                       );
+
+                      // Delete button — restricted by role
+                      if (user && (['superadmin', 'lead', 'btv'].includes(user.role) || (article as any).createdBy === user.id)) {
+                        buttons.push(
+                          <button key="delete"
+                            onClick={() => {
+                              if (confirm(`Bạn có chắc chắn muốn xóa bài viết "${article.title}" không? Hành động này không thể hoàn tác.`)) {
+                                executeDelete(article.id);
+                              }
+                            }}
+                            className="text-[10px] font-medium px-2 py-1 rounded bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-colors" title="Xóa bài viết">
+                            🗑️
+                          </button>
+                        );
+                      }
 
                       return buttons;
                     })()}
