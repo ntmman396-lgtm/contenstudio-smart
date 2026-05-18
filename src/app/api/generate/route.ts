@@ -1,4 +1,3 @@
-export const maxDuration = 60;
 import { NextRequest, NextResponse } from 'next/server';
 import { generateSingleArticle } from '@/lib/generator';
 import { GeneratorSettings, BatchPlanItem } from '@/types';
