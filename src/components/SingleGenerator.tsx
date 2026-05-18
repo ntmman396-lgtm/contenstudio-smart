@@ -202,7 +202,10 @@ export default function SingleGenerator() {
 
       setGenerationStatus(`✅ Đã tạo xong bài viết: ${data.article.title}. Đang chuyển hướng...`);
       
-      await saveGeneratedArticle(data.article);
+      const savedArticle = await saveGeneratedArticle(data.article);
+      if (!savedArticle) {
+        throw new Error('Đã tạo bài viết bằng AI thành công nhưng gặp lỗi khi lưu vào Cơ sở dữ liệu (Database). Vui lòng kiểm tra kết nối database hoặc log server Vercel!');
+      }
 
       const newHistory = [{
         id: data.article.id,

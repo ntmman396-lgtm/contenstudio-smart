@@ -10,11 +10,6 @@ export const dynamic = 'force-dynamic';
 // Define the directory path for storing generated articles
 const ARTICLES_DIR = path.join(process.cwd(), 'generated_articles');
 
-// Ensure the directory exists
-if (!fs.existsSync(ARTICLES_DIR)) {
-  fs.mkdirSync(ARTICLES_DIR, { recursive: true });
-}
-
 // Helper: safely stringify a value for SQLite JSON columns
 function toJson(value: any): string | null {
   if (value === undefined || value === null) return null;
@@ -153,6 +148,9 @@ export async function POST(request: NextRequest) {
     
     // Save backup to hard drive folder
     try {
+      if (!fs.existsSync(ARTICLES_DIR)) {
+        fs.mkdirSync(ARTICLES_DIR, { recursive: true });
+      }
       const fileName = `${finalRecord.slug || finalRecord.id}.json`;
       const filePath = path.join(ARTICLES_DIR, fileName);
       fs.writeFileSync(filePath, JSON.stringify(finalRecord, null, 2), 'utf-8');

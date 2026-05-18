@@ -2,12 +2,31 @@
   "name": "longchau-content-studio",
   "version": "0.1.0",
   "private": true,
+  "main": "main.js",
   "scripts": {
     "dev": "next dev",
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "app:dev": "electron .",
+    "app:build:win": "electron-builder --win",
+    "app:build:mac": "electron-builder --mac"
+  },
+  "build": {
+    "appId": "com.longchau.contentstudio",
+    "productName": "Long Chau Content Studio",
+    "directories": {
+      "output": "release"
+    },
+    "mac": {
+      "category": "public.app-category.productivity"
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    }
   },
   "dependencies": {
     "@google/genai": "^1.47.0",
@@ -55,6 +74,8 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "dotenv": "^17.4.1",
+    "electron": "^42.1.0",
+    "electron-builder": "^26.8.1",
     "eslint": "^8",
     "eslint-config-next": "14.2.35",
     "postcss": "^8",

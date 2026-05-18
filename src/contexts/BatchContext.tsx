@@ -132,14 +132,23 @@ export function BatchProvider({ children }: { children: ReactNode }) {
         }),
       });
 
-      const data = await response.json();
+      let data;
+      const responseText = await response.text();
+      try {
+        data = JSON.parse(responseText);
+      } catch (parseError) {
+        throw new Error(`Server returned non-JSON response (${response.status}): ${responseText.substring(0, 100)}...`);
+      }
 
-      if (!response.ok) throw new Error(data.error || 'Generation failed');
+      if (!response.ok) throw new Error(data?.error || 'Generation failed');
 
       // Save to API via storage
-      await saveGeneratedArticle(data.article);
+      const savedArticle = await saveGeneratedArticle(data.article);
+      if (!savedArticle) {
+        throw new Error('Đã tạo bằng AI nhưng lỗi khi lưu vào Database');
+      }
 
-      setPlanItems(prev => prev.map(i => i.id === item.id ? { ...i, status: 'completed', articleId: data.article.id } : i));
+      setPlanItems(prev => prev.map(i => i.id === item.id ? { ...i, status: 'completed', articleId: savedArticle.id } : i));
       
       // Dispatch storage event manually so Sidebar and Review Queue sync instantly
       window.dispatchEvent(new Event('storage'));
