@@ -21,7 +21,7 @@ export async function extractCitations(
 ) {
   // STEP 1 — Extract inline citations from content
   const model = genAI.getGenerativeModel({ 
-      model: 'gemini-2.5-flash',
+      model: 'gemini-1.5-pro',
       generationConfig: { 
           responseMimeType: "application/json",
           temperature: 0.1 // Keep deterministic extraction

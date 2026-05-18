@@ -135,7 +135,7 @@ export async function runReview(article: any, templateId: string, targetWebsite:
 
   // 2. Call Gemini
   const model = genAI.getGenerativeModel({
-    model: 'gemini-2.5-flash',
+    model: 'gemini-1.5-pro',
     generationConfig: {
       temperature: 0.1, // Keep it deterministic for QC
       responseMimeType: 'application/json'
