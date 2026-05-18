@@ -3,10 +3,18 @@ import { getSessionUser, SESSION_COOKIE } from '@/lib/auth'
 
 export async function GET(request: NextRequest) {
   const token = request.cookies.get(SESSION_COOKIE)?.value
-  if (!token) return NextResponse.json({ user: null }, { status: 401 })
+  if (!token) {
+    const response = NextResponse.json({ user: null }, { status: 401 })
+    response.cookies.delete(SESSION_COOKIE)
+    return response
+  }
 
   const user = await getSessionUser(token)
-  if (!user) return NextResponse.json({ user: null }, { status: 401 })
+  if (!user) {
+    const response = NextResponse.json({ user: null }, { status: 401 })
+    response.cookies.delete(SESSION_COOKIE)
+    return response
+  }
 
   return NextResponse.json({ user })
 }

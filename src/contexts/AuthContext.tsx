@@ -28,9 +28,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setUser(data.user ?? null)
       } else {
         setUser(null)
+        if (window.location.pathname !== '/login') {
+          window.location.href = '/login'
+        }
       }
     } catch {
       setUser(null)
+      if (window.location.pathname !== '/login') {
+        window.location.href = '/login'
+      }
     } finally {
       setLoading(false)
     }
