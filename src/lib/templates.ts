@@ -858,9 +858,9 @@ const HOI_DAP_BAC_SI: ContentTemplate = {
   sitePromptOverrides: {
     'tiem-chung': `\nTHÊM QUY TẮC CHO SITE TIÊM CHỦNG:\n- Nếu câu hỏi liên quan đến bệnh có vắc xin phòng ngừa, BẮT BUỘC đề cập đến tiêm chủng\n- CTA: Hướng dẫn đặt lịch tiêm chủng hoặc tư vấn gói tiêm phù hợp\n- Giọng điệu: Bác sĩ tư vấn tiêm chủng, nhấn mạnh phòng bệnh chủ động`,
   },
-  stepCount: 4,
-  steps: ['QUESTION', 'DOCTOR_RESPONSE', 'RELATED_QUESTIONS', 'DISCLAIMER'],
-  estimatedWords: { min: 300, max: 600 },
+  stepCount: 3,
+  steps: ['QUESTION', 'DOCTOR_RESPONSE', 'DISCLAIMER'],
+  estimatedWords: { min: 200, max: 450 },
   systemPrompt: `Bạn là bác sĩ chuyên khoa giàu kinh nghiệm đang tư vấn sức khỏe trên website Nhà thuốc Long Châu.
 
 Nhiệm vụ:
@@ -894,8 +894,9 @@ BẮT BUỘC TUÂN THỦ CẤU TRÚC TRONG TRƯỜNG "content" (HTML):
 - TUYỆT ĐỐI KHÔNG dùng thẻ trích dẫn (blockquote, <blockquote>, ký tự >) cho phần câu hỏi này. Hãy viết thành đoạn văn thường (thẻ <p>).
 
 ## Bác sĩ giải đáp
-Mở đầu bằng format:
-"Câu hỏi được BS[CKI.] [Tên bác sĩ] - [Chuyên khoa] - [Số năm] kinh nghiệm giải đáp."
+Mở đầu BẮT BUỘC bằng chính xác định dạng in nghiêng và đục lỗ nguyên văn sau đây (không được tự ý điền tên bác sĩ hay chuyên khoa vào dấu ngoặc vuông, giữ nguyên các dấu ngoặc vuông rỗng '[ ]'):
+"*Câu hỏi được BS [ ] - Chuyên khoa [ ] - [ ] năm kinh nghiệm trong lĩnh vực [ ] giải đáp.*"
+(Hoặc viết bằng HTML: "<em>Câu hỏi được BS [ ] - Chuyên khoa [ ] - [ ] năm kinh nghiệm trong lĩnh vực [ ] giải đáp.</em>")
 
 QUY TẮC TRIỂN KHAI PHẦN GIẢI ĐÁP:
 - Viết thành các đoạn ngắn, rõ ý.
@@ -912,15 +913,8 @@ YÊU CẦU CHUYÊN MÔN:
 - Ưu tiên dẫn chiếu theo: Bộ Y tế Việt Nam, WHO, CDC, NIH, Bệnh viện/chuyên trang y khoa uy tín.
 
 YÊU CẦU FORMAT:
-- Tổng độ dài bài (trong content):
-  - Đơn giản: 300-400 từ
-  - Trung bình: 400-500 từ
-  - Phức tạp: 500-600 từ
+- Tổng độ dài bài (trong content) BẮT BUỘC phải dưới 500 từ (nằm trong khoảng 200-450 từ).
 - Có sử dụng bold cho: Thuật ngữ quan trọng, Cảnh báo nguy hiểm, Khuyến nghị chăm sóc. Ví dụ: **virus**, **kháng thuốc**, **nghỉ ngơi đủ**, **uống đủ nước**.
-
-## Các câu hỏi liên quan
-- Tạo 3-5 FAQ liên quan trực tiếp đến chủ đề.
-- FAQ phải ngắn gọn, sát intent tìm kiếm người dùng.
 
 ## Disclaimer
 - Nội dung chỉ mang tính tham khảo, không thay thế chẩn đoán hoặc điều trị y khoa.
@@ -939,9 +933,6 @@ GIỌNG VĂN:
   outline: [
     { type: 'h2', label: 'Câu hỏi', fieldKey: 'cauHoi' },
     { type: 'h2', label: 'Bác sĩ giải đáp', fieldKey: 'bacSiGiaiDap' },
-    { type: 'h2', label: 'Các câu hỏi liên quan', fieldKey: 'faq', children: [
-        { type: 'meta', label: '3-5 câu hỏi thường gặp' },
-    ]},
     { type: 'h2', label: 'Disclaimer', fieldKey: 'disclaimer' },
     { type: 'required', label: 'Yêu cầu y khoa chính thống & chuẩn AIO' },
   ],
@@ -952,11 +943,12 @@ GIỌNG VĂN:
   ],
 
   notes: [
-    'Độ dài từ 300 - 600 từ tùy độ phức tạp.',
-    'Sử dụng format mở đầu cố định của bác sĩ.',
+    'Độ dài toàn bài trong content phải dưới 500 từ (200 - 450 từ).',
+    'Bắt buộc dùng mẫu in nghiêng đục lỗ ở phần mở đầu Bác sĩ giải đáp.',
     'Không tự kê đơn thuốc cụ thể.',
     'Bắt buộc có Disclaimer ở cuối bài.',
     'Sapo nhận câu trả lời thẳng trực tiếp (40-60 từ).',
+    'Không tạo phần câu hỏi liên quan (FAQ).',
   ],
 };
 
