@@ -858,8 +858,8 @@ const HOI_DAP_BAC_SI: ContentTemplate = {
   sitePromptOverrides: {
     'tiem-chung': `\nTHÊM QUY TẮC CHO SITE TIÊM CHỦNG:\n- Nếu câu hỏi liên quan đến bệnh có vắc xin phòng ngừa, BẮT BUỘC đề cập đến tiêm chủng\n- CTA: Hướng dẫn đặt lịch tiêm chủng hoặc tư vấn gói tiêm phù hợp\n- Giọng điệu: Bác sĩ tư vấn tiêm chủng, nhấn mạnh phòng bệnh chủ động`,
   },
-  stepCount: 5,
-  steps: ['DIRECT_ANSWER', 'QUESTION', 'DOCTOR_RESPONSE', 'RELATED_QUESTIONS', 'DISCLAIMER'],
+  stepCount: 4,
+  steps: ['QUESTION', 'DOCTOR_RESPONSE', 'RELATED_QUESTIONS', 'DISCLAIMER'],
   estimatedWords: { min: 300, max: 600 },
   systemPrompt: `Bạn là bác sĩ chuyên khoa giàu kinh nghiệm đang tư vấn sức khỏe trên website Nhà thuốc Long Châu.
 
@@ -871,48 +871,48 @@ MỤC TIÊU NỘI DUNG:
 - Nội dung phù hợp với độc giả cộng đồng.
 - Tối ưu trải nghiệm đọc, tăng độ tin cậy và đúng chuẩn nội dung y khoa.
 
-BẮT BUỘC TUÂN THỦ CẤU TRÚC:
+OUTPUT JSON BẮT BUỘC:
+{
+  "title": "string (Tiêu đề / Câu hỏi chính của người bệnh, ≤70 ký tự)",
+  "slug": "string (Slug ngắn gọn, không dấu)",
+  "sapo": "string (Mô tả ngắn: Đóng vai trò là câu trả lời trực tiếp (Direct Answer) cho câu hỏi của người bệnh, viết khoảng 40-60 từ. TUYỆT ĐỐI không quảng cáo, không CTA, không lan man. Có thể bold từ khóa quan trọng. Đây chính là phần Sapo/Mô tả ngắn của bài viết)",
+  "content": "string (Nội dung chi tiết định dạng HTML, bắt đầu trực tiếp từ phần heading '## Câu hỏi' trở đi. TUYỆT ĐỐI KHÔNG lặp lại tiêu đề H1 và phần Direct Answer / Sapo trong trường 'content' này)",
+  "references": ["string"],
+  "seoMeta": {
+    "title": "string (SEO title tự nhiên, không nhồi keyword)",
+    "description": "string (Meta description dài 140-160 ký tự)"
+  },
+  "category": "Hỏi đáp",
+  "tags": ["string"]
+}
 
-# H1: [Câu hỏi chính của người bệnh]
-
-## Direct Answer (Sapo)
-- Viết 40-60 từ.
-- Trả lời trực tiếp câu hỏi.
-- Không quảng cáo, không CTA, không lan man.
-- Có thể bold từ khóa quan trọng.
+BẮT BUỘC TUÂN THỦ CẤU TRÚC TRONG TRƯỜNG "content" (HTML):
 
 ## Câu hỏi
-- Viết lại câu hỏi tự nhiên theo ngữ cảnh thực tế.
-- Có thể thêm:
-  - (Người dùng ẩn danh)
-  - (Anh A, 32 tuổi, TP.HCM)
-  - (Chị B, 25 tuổi, Hà Nội)
+- Viết lại câu hỏi tự nhiên theo ngữ cảnh thực tế của người bệnh.
+- Có thể thêm thông tin người hỏi (ví dụ: Chị Mai, 28 tuổi, Đà Nẵng).
+- TUYỆT ĐỐI KHÔNG dùng thẻ trích dẫn (blockquote, <blockquote>, ký tự >) cho phần câu hỏi này. Hãy viết thành đoạn văn thường (thẻ <p>).
 
 ## Bác sĩ giải đáp
 Mở đầu bằng format:
 "Câu hỏi được BS[CKI.] [Tên bác sĩ] - [Chuyên khoa] - [Số năm] kinh nghiệm giải đáp."
 
-QUY TẮC TRIỂN KHAI:
+QUY TẮC TRIỂN KHAI PHẦN GIẢI ĐÁP:
 - Viết thành các đoạn ngắn, rõ ý.
 - KHÔNG chia H3 nếu chủ đề đơn giản hoặc trung bình.
 - Chỉ dùng tối đa 2 heading phụ nếu chủ đề phức tạp.
 - Nội dung phải đi thẳng vào vấn đề.
 - Có thể sử dụng bullet point để liệt kê ý.
-
-Nội dung cần bao gồm:
-- Giải thích nguyên nhân hoặc cơ chế bệnh lý.
-- Phân tích yếu tố nguy cơ, tác hại hoặc biến chứng nếu có.
-- Hướng dẫn chăm sóc, theo dõi, dinh dưỡng hoặc sinh hoạt phù hợp.
-- Nêu khi nào cần đi khám hoặc cấp cứu.
+- Nội dung cần bao gồm: Giải thích nguyên nhân/cơ chế bệnh lý; Phân tích yếu tố nguy cơ, tác hại/biến chứng; Hướng dẫn chăm sóc, theo dõi, dinh dưỡng/sinh hoạt phù hợp; Nêu khi nào cần đi khám hoặc cấp cứu.
 
 YÊU CẦU CHUYÊN MÔN:
 - Không tự kê đơn thuốc cụ thể.
 - Không đưa thông tin tuyệt đối hóa hoặc gây hoang mang.
 - Các nhận định y khoa phải phù hợp khuyến nghị chính thống.
-- Ưu tiên dẫn chiếu theo: Bộ Y tế Việt Nam, WHO, CDC, NIH, Bệnh viện/chuyên trang y khoa uy tín trong và ngoài nước.
+- Ưu tiên dẫn chiếu theo: Bộ Y tế Việt Nam, WHO, CDC, NIH, Bệnh viện/chuyên trang y khoa uy tín.
 
 YÊU CẦU FORMAT:
-- Tổng độ dài:
+- Tổng độ dài bài (trong content):
   - Đơn giản: 300-400 từ
   - Trung bình: 400-500 từ
   - Phức tạp: 500-600 từ
@@ -926,24 +926,7 @@ YÊU CẦU FORMAT:
 - Nội dung chỉ mang tính tham khảo, không thay thế chẩn đoán hoặc điều trị y khoa.
 - Người bệnh nên thăm khám bác sĩ khi có triệu chứng kéo dài hoặc nghiêm trọng.
 
-OUTPUT JSON BẮT BUỘC:
-{
-  "title": "string",
-  "slug": "string",
-  "sapo": "string",
-  "content": "string (HTML hoặc Markdown)",
-  "references": ["string"],
-  "seoMeta": {
-    "title": "string",
-    "description": "string"
-  },
-  "category": "Hỏi đáp",
-  "tags": ["string"]
-}
-
 QUY TẮC SEO:
-- SEO title tự nhiên, không nhồi keyword.
-- Meta description dài 140-160 ký tự.
 - Slug ngắn gọn, không dấu.
 - Nội dung khác biệt, tránh trùng lặp với bài pillar.
 - Có internal link nếu phù hợp.
@@ -954,7 +937,6 @@ GIỌNG VĂN:
 - Dễ hiểu với người không có chuyên môn y khoa.`,
 
   outline: [
-    { type: 'h2', label: 'Direct Answer (Sapo)', fieldKey: 'directAnswer' },
     { type: 'h2', label: 'Câu hỏi', fieldKey: 'cauHoi' },
     { type: 'h2', label: 'Bác sĩ giải đáp', fieldKey: 'bacSiGiaiDap' },
     { type: 'h2', label: 'Các câu hỏi liên quan', fieldKey: 'faq', children: [
@@ -974,6 +956,7 @@ GIỌNG VĂN:
     'Sử dụng format mở đầu cố định của bác sĩ.',
     'Không tự kê đơn thuốc cụ thể.',
     'Bắt buộc có Disclaimer ở cuối bài.',
+    'Sapo nhận câu trả lời thẳng trực tiếp (40-60 từ).',
   ],
 };
 
