@@ -316,6 +316,22 @@ export async function generateSingleArticle(
     content = content.replace(/<p><strong>(Câu hỏi của người bệnh|Hỏi|Câu hỏi)<\/strong><\/p>/gi, '<p><strong>Câu hỏi:</strong></p>');
     content = content.replace(/<p><strong>(Bác sĩ giải đáp|Bác sĩ trả lời|Giải đáp)<\/strong><\/p>/gi, '<p><strong>Giải đáp:</strong></p>');
     content = content.replace(/<p><strong>(Tuyên bố miễn trừ trách nhiệm|Tuyên bố miễn trừ|Disclaimer)<\/strong><\/p>/gi, '<p><strong>Disclaimer:</strong></p>');
+
+    // 4. Force empty brackets [ ] for doctor name and years of experience to prevent any AI hallucinations
+    content = content.replace(
+      /(Câu hỏi được BS|Câu hỏi được Bác sĩ)[\s.]*([^-\n]*?)-\s*Chuyên khoa\s*([^-\n]+?)\s*-\s*([^-\n]*?)\s*năm kinh nghiệm trong lĩnh vực\s*([^-\n]+?)\s*giải đáp\.?/gi,
+      'Câu hỏi được BS. [ ] - Chuyên khoa $3 - [ ] năm kinh nghiệm trong lĩnh vực $5 giải đáp.'
+    );
+
+    // 5. Ensure there is asker info in blockquote (if missing, append (Khách hàng ẩn danh))
+    content = content.replace(/<blockquote>([\s\S]*?)<\/blockquote>/gi, (match, innerHtml) => {
+      const trimmed = innerHtml.trim();
+      // If it doesn't contain a parenthesis at the end (like (Khách hàng ẩn danh) or (Chị...)), append it
+      if (!/\)\s*<\/p>\s*$/i.test(trimmed)) {
+        return `<blockquote>\n  ${trimmed}\n  <p>(Khách hàng ẩn danh)</p>\n</blockquote>`;
+      }
+      return match;
+    });
   }
 
   // Auto replace [Ảnh minh họa...] with caption placeholders

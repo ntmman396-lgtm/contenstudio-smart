@@ -898,11 +898,14 @@ Cấu trúc nội dung chi tiết:
 
 <p><strong>Câu hỏi:</strong></p>
 <blockquote>
-  <p>[Nội dung viết lại câu hỏi tự nhiên theo ngữ cảnh thực tế của người bệnh. Có thể thêm thông tin người hỏi như Chị Mai, 28 tuổi, Đà Nẵng. TUYỆT ĐỐI KHÔNG chèn link <a> bên trong blockquote này.]</p>
+  <p>[Nội dung viết lại câu hỏi tự nhiên theo ngữ cảnh thực tế của người bệnh. TUYỆT ĐỐI KHÔNG chèn link <a> bên trong blockquote này.]</p>
+  <p>([Tên người hỏi/Chị Mai/Anh Nam], [Tuổi] tuổi, [Tỉnh/Thành phố] hoặc (Khách hàng ẩn danh) nếu không có thông tin chi tiết trong yêu cầu đầu vào. BẮT BUỘC PHẢI THÊM phần thông tin người hỏi này nằm trong thẻ &lt;p&gt; ở dòng cuối cùng bên trong blockquote, đặt trong dấu ngoặc đơn.)</p>
 </blockquote>
 
 <p><strong>Giải đáp:</strong></p>
 <p><em>Câu hỏi được BS [ ] - Chuyên khoa [ ] - [ ] năm kinh nghiệm trong lĩnh vực [ ] giải đáp.</em></p>
+LƯU Ý: BẮT BUỘC giữ nguyên hai dấu ngoặc vuông rỗng `[ ]` cho tên bác sĩ và số năm kinh nghiệm ở câu trên (tuyệt đối không điền tên hay số năm giả vào hai chỗ này). Chỉ điền chuyên khoa và lĩnh vực phù hợp với chủ đề bài viết.
+
 [Nội dung bác sĩ trả lời, tư vấn. Viết thành các đoạn ngắn rõ ý, có thể sử dụng danh sách bullet point <ul><li>. Nội dung giải thích nguyên nhân/cơ chế, yếu tố nguy cơ, hướng dẫn chăm sóc, theo dõi, khi nào cần đi khám. TUYỆT ĐỐI KHÔNG bôi đậm bất cứ từ nào trong đây.]
 
 <p><strong>Disclaimer:</strong></p>
