@@ -55,10 +55,14 @@ function buildSingleUserPrompt(
     'vi-en': 'Song ngữ Việt-Anh',
   };
 
+  const isQA = settings.templateId === 'hoi-dap-bac-si' || settings.templateId === 'hoi-dap';
   const keywordText = item.keyword ? `Từ khóa/Chủ đề trọng tâm: "${item.keyword}"\n` : '';
   const outlineText = item.outline 
     ? `⚠️ DÀN Ý BẮT BUỘC (DO BIÊN TẬP VIÊN CUNG CẤP — PHẢI TUÂN THỦ 100%):\n${item.outline}\n\n🚨🚨🚨 QUY TẮC TUYỆT ĐỐI VỀ HEADING:\n1. Mỗi dòng "H2: ..." trong dàn ý trên tương ứng với MỘT thẻ <h2> trong bài HTML. Mỗi dòng "H3: ..." tương ứng MỘT thẻ <h3>.\n2. NỘI DUNG TEXT của heading PHẢI COPY NGUYÊN VĂN, TỪNG CHỮ MỘT từ dàn ý. TUYỆT ĐỐI KHÔNG được viết lại (paraphrase), KHÔNG thêm từ, KHÔNG bớt từ, KHÔNG đổi thứ tự từ.\n   Ví dụ: Dàn ý ghi "H2: ABC" → bài viết PHẢI là <h2>ABC</h2>. SAI: <h2>ABD nào đó</h2>.\n3. Số lượng H2/H3 trong bài PHẢI BẰNG ĐÚNG số lượng trong dàn ý. KHÔNG thêm heading mới, KHÔNG bỏ heading nào.\n4. Nếu có xung đột giữa dàn ý này và outline mặc định trong system prompt, LUÔN ƯU TIÊN DÀN Ý NÀY.`
-    : `Dàn ý: (Chưa có — người dùng không cung cấp) BẠN HÃY TỰ ĐỘNG PHÂN TÍCH TỪ KHÓA/CHỦ ĐỀ VÀ NỀN TẢNG NGUỒN ĐỂ TỰ LÊN DÀN Ý CHUẨN SEO (GỒM H2, H3 LOGIC) RỒI MỚI VIẾT BÀI CHI TIẾT.`;
+    : (isQA 
+        ? `Dàn ý: (Chưa có — người dùng không cung cấp) Đối với bài viết Hỏi đáp, TUYỆT ĐỐI KHÔNG sử dụng cấu trúc heading H2/H3. Bắt buộc viết câu hỏi và câu trả lời theo đúng cấu trúc HTML Hỏi đáp chi tiết ở dưới.`
+        : `Dàn ý: (Chưa có — người dùng không cung cấp) BẠN HÃY TỰ ĐỘNG PHÂN TÍCH TỪ KHÓA/CHỦ ĐỀ VÀ NỀN TẢNG NGUỒN ĐỂ TỰ LÊN DÀN Ý CHUẨN SEO (GỒM H2, H3 LOGIC) RỒI MỚI VIẾT BÀI CHI TIẾT.`
+      );
 
   // Category from user selection or settings
   const categoryValue = item.category || settings.category || templateName;
@@ -100,7 +104,7 @@ ${internalLinksInstruction}
 QUY TẮC OUTPUT:
 1. Output PHẢI là 1 JSON object duy nhất — KHÔNG kèm giải thích, KHÔNG có commentary.
 2. Trường "content" PHẢI chứa toàn bộ nội dung HTML bài viết hoàn chỉnh (dùng <h2>, <h3>, <p>, <ul>, <li>, <strong>, <em>). NỘI DUNG PHẢI ĐẦY ĐỦ, CHI TIẾT, KHÔNG TÓM TẮT.
-3. Nội dung PHẢI bám sát y hệt dàn ý (outline) gốc mà người dùng nhập. Sử dụng thẻ <h2> và <h3> khớp y hệt outline. KHÔNG ĐƯỢC tự ý gom nhóm hoặc tự ý đổi ý nghĩa các heading mà người dùng truyền vào. Quan trọng: Đừng để bài viết bị máy móc. Giữa các phần phải phân tích sâu, có sự kết nối và năng lượng tích cực.
+3. ${isQA ? 'Đối với bài viết Hỏi đáp, TUYỆT ĐỐI KHÔNG sử dụng thẻ tiêu đề <h2> hoặc <h3>. Chỉ dùng các thẻ đoạn văn HTML <p> và bọc <strong> theo quy định cấu trúc Hỏi đáp ở dưới.' : 'Nội dung PHẢI bám sát y hệt dàn ý (outline) gốc mà người dùng nhập. Sử dụng thẻ <h2> và <h3> khớp y hệt outline. KHÔNG ĐƯỢC tự ý gom nhóm hoặc tự ý đổi ý nghĩa các heading mà người dùng truyền vào. Quan trọng: Đừng để bài viết bị máy móc. Giữa các phần phải phân tích sâu, có sự kết nối và năng lượng tích cực.'}
 4. KHÔNG đặt nội dung suy luận ngoại cảnh, giải thích quy trình hệ thống hay ghi chú bên ngoài JSON. KHÔNG nói chuyện với tư cách là một AI.
 5. KHÔNG bịa thông tin không có trong tài liệu nguồn.
 6. KHÔNG bọc JSON trong code block.
@@ -287,7 +291,33 @@ export async function generateSingleArticle(
 
   const title = (raw.title as string) || batchItem.title;
   let content = (raw.content as string) || '';
-  
+  let sapo = (raw.sapo as string) || '';
+
+  if (settings.templateId === 'hoi-dap-bac-si' || settings.templateId === 'hoi-dap') {
+    // 1. Clean up sapo: remove any HTML tags and markdown bold formatting to keep it strictly plain text
+    sapo = sapo.replace(/<\/?[^>]+(>|$)/g, '').replace(/\*\*/g, '').trim();
+
+    // 2. Convert raw **...** inside <p> paragraphs to <strong>...</strong>
+    content = content.replace(/<p>\s*\*\*(.*?)\*\*\s*<\/p>/gi, '<p><strong>$1</strong></p>');
+    content = content.replace(/(?<!<p>)\s*\*\*(Câu hỏi|Câu hỏi của người bệnh|Giải đáp|Bác sĩ giải đáp|Bác sĩ trả lời|Disclaimer|Tuyên bố miễn trừ|Tuyên bố miễn trừ trách nhiệm)(?::)?\*\*\s*(?!<\/p>)/gi, '<p><strong>$1:</strong></p>');
+
+    // 3. Convert markdown headings (like ## Câu hỏi, ### Bác sĩ giải đáp, etc.) and HTML headings (like <h2>...</h2>) to the correct structure
+    content = content.replace(/^\s*#{2,4}\s*(Câu hỏi|Câu hỏi của người bệnh)(?::)?\s*$/gim, '<p><strong>Câu hỏi:</strong></p>');
+    content = content.replace(/^\s*#{2,4}\s*(Giải đáp|Bác sĩ giải đáp|Bác sĩ trả lời)(?::)?\s*$/gim, '<p><strong>Giải đáp:</strong></p>');
+    content = content.replace(/^\s*#{2,4}\s*(Disclaimer|Tuyên bố miễn trừ|Tuyên bố miễn trừ trách nhiệm)(?::)?\s*$/gim, '<p><strong>Disclaimer:</strong></p>');
+    content = content.replace(/^\s*#{2,4}\s*([^#\n\r]+)$/gm, '<p><strong>$1</strong></p>');
+
+    content = content.replace(/<h[2-4][^>]*>\s*(Câu hỏi|Câu hỏi của người bệnh)(?::)?\s*<\/h[2-4]>/gi, '<p><strong>Câu hỏi:</strong></p>');
+    content = content.replace(/<h[2-4][^>]*>\s*(Giải đáp|Bác sĩ giải đáp|Bác sĩ trả lời)(?::)?\s*<\/h[2-4]>/gi, '<p><strong>Giải đáp:</strong></p>');
+    content = content.replace(/<h[2-4][^>]*>\s*(Disclaimer|Tuyên bố miễn trừ|Tuyên bố miễn trừ trách nhiệm)(?::)?\s*<\/h[2-4]>/gi, '<p><strong>Disclaimer:</strong></p>');
+    content = content.replace(/<h[2-4][^>]*>([\s\S]*?)<\/h[2-4]>/gi, '<p><strong>$1</strong></p>');
+
+    // Normalize formatting of the key headers
+    content = content.replace(/<p><strong>(Câu hỏi của người bệnh|Hỏi|Câu hỏi)<\/strong><\/p>/gi, '<p><strong>Câu hỏi:</strong></p>');
+    content = content.replace(/<p><strong>(Bác sĩ giải đáp|Bác sĩ trả lời|Giải đáp)<\/strong><\/p>/gi, '<p><strong>Giải đáp:</strong></p>');
+    content = content.replace(/<p><strong>(Tuyên bố miễn trừ trách nhiệm|Tuyên bố miễn trừ|Disclaimer)<\/strong><\/p>/gi, '<p><strong>Disclaimer:</strong></p>');
+  }
+
   // Auto replace [Ảnh minh họa...] with caption placeholders
   content = await autoFillImages(content);
 
@@ -295,7 +325,7 @@ export async function generateSingleArticle(
     id: `gen-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
     title,
     slug: generateSlug(title),
-    sapo: (raw.sapo as string) || '',
+    sapo,
     content,
     references: (raw.references as string[]) || [],
     seoMeta: {

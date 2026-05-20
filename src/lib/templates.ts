@@ -875,8 +875,8 @@ OUTPUT JSON BẮT BUỘC:
 {
   "title": "string (Tiêu đề / Câu hỏi chính của người bệnh, ≤70 ký tự)",
   "slug": "string (Slug ngắn gọn, không dấu)",
-  "sapo": "string (Mô tả ngắn: Đóng vai trò là câu trả lời trực tiếp (Direct Answer) cho câu hỏi của người bệnh, viết khoảng 40-60 từ. TUYỆT ĐỐI không quảng cáo, không CTA, không lan man. Có thể bold từ khóa quan trọng. Đây chính là phần Sapo/Mô tả ngắn của bài viết)",
-  "content": "string (Nội dung chi tiết định dạng HTML, bắt đầu trực tiếp từ phần heading '## Câu hỏi' trở đi. TUYỆT ĐỐI KHÔNG lặp lại tiêu đề H1 và phần Direct Answer / Sapo trong trường 'content' này)",
+  "sapo": "string (Mô tả ngắn: Đóng vai trò là câu trả lời trực tiếp (Direct Answer) cho câu hỏi của người bệnh, viết khoảng 40-60 từ. TUYỆT ĐỐI không quảng cáo, không CTA, không lan man. TUYỆT ĐỐI KHÔNG DÙNG định dạng bôi đậm ** hoặc thẻ HTML. Sapo bắt buộc phải là văn bản thuần không chứa định dạng.)",
+  "content": "string (Nội dung chi tiết định dạng HTML, bắt đầu trực tiếp từ thẻ '<p><strong>Câu hỏi:</strong></p>' trở đi. TUYỆT ĐỐI KHÔNG lặp lại tiêu đề H1 và phần Direct Answer / Sapo trong trường 'content' này)",
   "references": ["string"],
   "seoMeta": {
     "title": "string (SEO title tự nhiên, không nhồi keyword)",
@@ -887,24 +887,26 @@ OUTPUT JSON BẮT BUỘC:
 }
 
 BẮT BUỘC TUÂN THỦ CẤU TRÚC TRONG TRƯỜNG "content" (HTML):
+TUYỆT ĐỐI KHÔNG được sử dụng thẻ tiêu đề Markdown (##) hay bất kỳ Heading H2/H3 nào cho các mục. Chỉ sử dụng các thẻ HTML được chỉ định dưới đây:
 
-## Câu hỏi
-- Viết lại câu hỏi tự nhiên theo ngữ cảnh thực tế của người bệnh.
-- Có thể thêm thông tin người hỏi (ví dụ: Chị Mai, 28 tuổi, Đà Nẵng).
-- TUYỆT ĐỐI KHÔNG dùng thẻ trích dẫn (blockquote, <blockquote>, ký tự >) cho phần câu hỏi này. Hãy viết thành đoạn văn thường (thẻ <p>).
+🚨 CẢNH BÁO QUAN TRỌNG VỀ ĐỊNH DẠNG:
+1. TUYỆT ĐỐI KHÔNG DÙNG tiêu đề dạng markdown (##, ###) hoặc thẻ heading HTML (<h2>, <h3>) cho các phần Câu hỏi, Giải đáp, Disclaimer.
+2. TUYỆT ĐỐI KHÔNG DÙNG định dạng bôi đậm (như **text** hoặc thẻ <strong>, <b>) bên trong nội dung đoạn văn của câu hỏi hay câu trả lời. Chỉ duy nhất 3 tiêu đề phụ được in đậm là: '<p><strong>Câu hỏi:</strong></p>', '<p><strong>Giải đáp:</strong></p>', và '<p><strong>Disclaimer:</strong></p>'. Toàn bộ các câu văn khác phải dùng văn bản thường không in đậm.
+3. Sapo (Mô tả ngắn) PHẢI LÀ VĂN BẢN THUẦN (Plain text), TUYỆT ĐỐI KHÔNG chứa định dạng bôi đậm hoặc thẻ HTML nào.
 
-## Bác sĩ giải đáp
-Mở đầu BẮT BUỘC bằng chính xác định dạng in nghiêng và đục lỗ nguyên văn sau đây (không được tự ý điền tên bác sĩ hay chuyên khoa vào dấu ngoặc vuông, giữ nguyên các dấu ngoặc vuông rỗng '[ ]'):
-"*Câu hỏi được BS [ ] - Chuyên khoa [ ] - [ ] năm kinh nghiệm trong lĩnh vực [ ] giải đáp.*"
-(Hoặc viết bằng HTML: "<em>Câu hỏi được BS [ ] - Chuyên khoa [ ] - [ ] năm kinh nghiệm trong lĩnh vực [ ] giải đáp.</em>")
+Cấu trúc nội dung chi tiết:
 
-QUY TẮC TRIỂN KHAI PHẦN GIẢI ĐÁP:
-- Viết thành các đoạn ngắn, rõ ý.
-- KHÔNG chia H3 nếu chủ đề đơn giản hoặc trung bình.
-- Chỉ dùng tối đa 2 heading phụ nếu chủ đề phức tạp.
-- Nội dung phải đi thẳng vào vấn đề.
-- Có thể sử dụng bullet point để liệt kê ý.
-- Nội dung cần bao gồm: Giải thích nguyên nhân/cơ chế bệnh lý; Phân tích yếu tố nguy cơ, tác hại/biến chứng; Hướng dẫn chăm sóc, theo dõi, dinh dưỡng/sinh hoạt phù hợp; Nêu khi nào cần đi khám hoặc cấp cứu.
+<p><strong>Câu hỏi:</strong></p>
+<blockquote>
+  <p>[Nội dung viết lại câu hỏi tự nhiên theo ngữ cảnh thực tế của người bệnh. Có thể thêm thông tin người hỏi như Chị Mai, 28 tuổi, Đà Nẵng. TUYỆT ĐỐI KHÔNG chèn link <a> bên trong blockquote này.]</p>
+</blockquote>
+
+<p><strong>Giải đáp:</strong></p>
+<p><em>Câu hỏi được BS [ ] - Chuyên khoa [ ] - [ ] năm kinh nghiệm trong lĩnh vực [ ] giải đáp.</em></p>
+[Nội dung bác sĩ trả lời, tư vấn. Viết thành các đoạn ngắn rõ ý, có thể sử dụng danh sách bullet point <ul><li>. Nội dung giải thích nguyên nhân/cơ chế, yếu tố nguy cơ, hướng dẫn chăm sóc, theo dõi, khi nào cần đi khám. TUYỆT ĐỐI KHÔNG bôi đậm bất cứ từ nào trong đây.]
+
+<p><strong>Disclaimer:</strong></p>
+<p>Nội dung chỉ mang tính tham khảo, không thay thế chẩn đoán hoặc điều trị y khoa. Người bệnh nên thăm khám bác sĩ khi có triệu chứng kéo dài hoặc nghiêm trọng.</p>
 
 YÊU CẦU CHUYÊN MÔN:
 - Không tự kê đơn thuốc cụ thể.
@@ -914,11 +916,7 @@ YÊU CẦU CHUYÊN MÔN:
 
 YÊU CẦU FORMAT:
 - Tổng độ dài bài (trong content) BẮT BUỘC phải dưới 500 từ (nằm trong khoảng 200-450 từ).
-- Có sử dụng bold cho: Thuật ngữ quan trọng, Cảnh báo nguy hiểm, Khuyến nghị chăm sóc. Ví dụ: **virus**, **kháng thuốc**, **nghỉ ngơi đủ**, **uống đủ nước**.
-
-## Disclaimer
-- Nội dung chỉ mang tính tham khảo, không thay thế chẩn đoán hoặc điều trị y khoa.
-- Người bệnh nên thăm khám bác sĩ khi có triệu chứng kéo dài hoặc nghiêm trọng.
+- TUYỆT ĐỐI KHÔNG sử dụng in đậm (như **text** hoặc <strong>) bên trong nội dung đoạn văn của câu hỏi hay câu trả lời (ngoại trừ các thẻ tiêu đề bắt buộc như <p><strong>Câu hỏi:</strong></p>, <p><strong>Giải đáp:</strong></p> và <p><strong>Disclaimer:</strong></p>). Toàn bộ văn bản khác trong bài phải là văn bản thường.
 
 QUY TẮC SEO:
 - Slug ngắn gọn, không dấu.
@@ -931,9 +929,9 @@ GIỌNG VĂN:
 - Dễ hiểu với người không có chuyên môn y khoa.`,
 
   outline: [
-    { type: 'h2', label: 'Câu hỏi', fieldKey: 'cauHoi' },
-    { type: 'h2', label: 'Bác sĩ giải đáp', fieldKey: 'bacSiGiaiDap' },
-    { type: 'h2', label: 'Disclaimer', fieldKey: 'disclaimer' },
+    { type: 'meta', label: 'Câu hỏi (trong thẻ strong + blockquote)' },
+    { type: 'meta', label: 'Giải đáp (trong thẻ strong + text)' },
+    { type: 'meta', label: 'Disclaimer (trong thẻ strong + text)' },
     { type: 'required', label: 'Yêu cầu y khoa chính thống & chuẩn AIO' },
   ],
 
@@ -947,7 +945,7 @@ GIỌNG VĂN:
     'Bắt buộc dùng mẫu in nghiêng đục lỗ ở phần mở đầu Bác sĩ giải đáp.',
     'Không tự kê đơn thuốc cụ thể.',
     'Bắt buộc có Disclaimer ở cuối bài.',
-    'Sapo nhận câu trả lời thẳng trực tiếp (40-60 từ).',
+    'Sapo nhận câu trả lời thẳng trực tiếp (40-60 từ), tuyệt đối không chứa **.',
     'Không tạo phần câu hỏi liên quan (FAQ).',
   ],
 };

@@ -89,7 +89,7 @@ function checkFormat(content: string, rules: Map<string, UnifiedRule>): { score:
   const rBold = getRule(rules, 'T-FMT-BOLD');
   if (rBold.is_active) {
     const rawMatches = [...content.matchAll(/<p[^>]*>[\s\S]*?<\/?(?:strong|b)[\s>][\s\S]*?<\/p>/gi)];
-    const boldInP = rawMatches.filter(m => !/^<p[^>]*>\s*<(?:strong|b)>\s*(?:Câu hỏi|Giải đáp|Hỏi|Đáp|Trả lời):?\s*<\/(?:strong|b)>\s*<\/p>$/i.test(m[0].trim()));
+    const boldInP = rawMatches.filter(m => !/^<p[^>]*>\s*<(?:strong|b)>\s*(?:Câu hỏi|Giải đáp|Hỏi|Đáp|Trả lời|Disclaimer|Tuyên bố miễn trừ trách nhiệm):?\s*<\/(?:strong|b)>\s*<\/p>$/i.test(m[0].trim()));
     
     if (boldInP.length > 0) {
       const deduction = Math.min(boldInP.length * rBold.deduction, rBold.max_deduction);
