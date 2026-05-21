@@ -904,7 +904,7 @@ Cấu trúc nội dung chi tiết:
 
 <p><strong>Giải đáp:</strong></p>
 <p><em>Câu hỏi được BS [ ] - Chuyên khoa [ ] - [ ] năm kinh nghiệm trong lĩnh vực [ ] giải đáp.</em></p>
-LƯU Ý: BẮT BUỘC giữ nguyên hai dấu ngoặc vuông rỗng `[ ]` cho tên bác sĩ và số năm kinh nghiệm ở câu trên (tuyệt đối không điền tên hay số năm giả vào hai chỗ này). Chỉ điền chuyên khoa và lĩnh vực phù hợp với chủ đề bài viết.
+LƯU Ý: BẮT BUỘC giữ nguyên hai dấu ngoặc vuông rỗng \[ \] cho tên bác sĩ và số năm kinh nghiệm ở câu trên (tuyệt đối không điền tên hay số năm giả vào hai chỗ này). Chỉ điền chuyên khoa và lĩnh vực phù hợp với chủ đề bài viết.
 
 [Nội dung bác sĩ trả lời, tư vấn. Viết thành các đoạn ngắn rõ ý, có thể sử dụng danh sách bullet point <ul><li>. Nội dung giải thích nguyên nhân/cơ chế, yếu tố nguy cơ, hướng dẫn chăm sóc, theo dõi, khi nào cần đi khám. TUYỆT ĐỐI KHÔNG bôi đậm bất cứ từ nào trong đây.]
 

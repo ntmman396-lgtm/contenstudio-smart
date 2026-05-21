@@ -319,8 +319,8 @@ export async function generateSingleArticle(
 
     // 4. Force empty brackets [ ] for doctor name and years of experience to prevent any AI hallucinations
     content = content.replace(
-      /(Câu hỏi được BS|Câu hỏi được Bác sĩ)[\s.]*([^-\n]*?)-\s*Chuyên khoa\s*([^-\n]+?)\s*-\s*([^-\n]*?)\s*năm kinh nghiệm trong lĩnh vực\s*([^-\n]+?)\s*giải đáp\.?/gi,
-      'Câu hỏi được BS. [ ] - Chuyên khoa $3 - [ ] năm kinh nghiệm trong lĩnh vực $5 giải đáp.'
+      /(Câu hỏi được BS|Câu hỏi được Bác sĩ)[\s.]*([^–—\n-]*?)\s*[-–—]\s*Chuyên khoa\s*([^–—\n-]+?)\s*[-–—]\s*([^–—\n-]*?)\s*năm kinh nghiệm trong lĩnh vực\s*([^–—\n-]+?)\s*giải đáp\.?/gi,
+      (m, g1, g2, g3, g4, g5) => `Câu hỏi được BS. [ ] - Chuyên khoa ${g3.trim()} - [ ] năm kinh nghiệm trong lĩnh vực ${g5.trim()} giải đáp.`
     );
 
     // 5. Ensure there is asker info in blockquote (if missing, append (Khách hàng ẩn danh))
