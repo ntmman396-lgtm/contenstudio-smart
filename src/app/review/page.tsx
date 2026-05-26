@@ -338,7 +338,9 @@ function ReviewQueueContent() {
       });
       if (!res.ok) throw new Error('Failed to fetch articles');
       const data = await res.json();
-      await exportBatchToZip(data, `export_${selectedArticleIds.length}_articles_${new Date().toISOString().slice(0, 10)}`);
+      // Inject keyword from rawFields for filename
+      const articlesWithKeyword = data.map((a: any) => ({ ...a, keyword: a.rawFields?.keywordChinh || a.keyword }));
+      await exportBatchToZip(articlesWithKeyword, `export_${selectedArticleIds.length}_articles_${new Date().toISOString().slice(0, 10)}`);
     } catch (error) {
       console.error('DOCX export error:', error);
       alert('❌ Lỗi khi export DOCX. Vui lòng thử lại.');
@@ -358,8 +360,12 @@ function ReviewQueueContent() {
       if (!res.ok) throw new Error('Failed to fetch article');
       const data = await res.json();
       if (data.length > 0) {
-        const title = data[0].title?.replace(/[^a-zA-Z0-9\u00C0-\u024F\u1E00-\u1EFF\s-]/g, '').replace(/\s+/g, '_').slice(0, 50) || 'article';
-        await exportBatchToDocx(data, title);
+        // Use keyword from rawFields for filename, fallback to title
+        const keyword = data[0].rawFields?.keywordChinh;
+        const fileName = (keyword || data[0].title || 'article')
+          .replace(/[^a-zA-Z0-9\u00C0-\u024F\u1E00-\u1EFF\s-]/g, '').replace(/\s+/g, '_').slice(0, 50);
+        const articlesWithKeyword = data.map((a: any) => ({ ...a, keyword: a.rawFields?.keywordChinh || a.keyword }));
+        await exportBatchToDocx(articlesWithKeyword, fileName);
       }
     } catch (error) {
       console.error('DOCX export error:', error);

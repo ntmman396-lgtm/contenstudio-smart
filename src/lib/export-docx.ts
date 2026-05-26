@@ -32,6 +32,8 @@ interface ExportArticle {
   seoMeta?: { title?: string; description?: string };
   templateName?: string;
   createdAt?: string;
+  /** Original keyword used to generate this article */
+  keyword?: string;
 }
 
 // ─── HTML → DOCX Converter ────────────────────────────────────
@@ -567,8 +569,8 @@ export async function exportBatchToZip(articles: ExportArticle[], zipName?: stri
     const doc = await buildSingleDoc(article);
     const blob = await Packer.toBlob(doc);
 
-    // Build unique file name
-    let baseName = sanitizeFileName(article.title);
+    // Build unique file name — prefer keyword over title
+    let baseName = sanitizeFileName(article.keyword || article.title);
     let fileName = `${baseName}.docx`;
     let counter = 1;
     while (usedNames.has(fileName)) {

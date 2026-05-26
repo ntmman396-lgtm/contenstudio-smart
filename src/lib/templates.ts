@@ -875,7 +875,7 @@ OUTPUT JSON BẮT BUỘC:
 {
   "title": "string (Tiêu đề / Câu hỏi chính của người bệnh, ≤70 ký tự)",
   "slug": "string (Slug ngắn gọn, không dấu)",
-  "sapo": "string (Mô tả ngắn: Đóng vai trò là câu trả lời trực tiếp (Direct Answer) cho câu hỏi của người bệnh, viết khoảng 40-60 từ. TUYỆT ĐỐI không quảng cáo, không CTA, không lan man. TUYỆT ĐỐI KHÔNG DÙNG định dạng bôi đậm ** hoặc thẻ HTML. Sapo bắt buộc phải là văn bản thuần không chứa định dạng.)",
+  "sapo": "string (Mô tả ngắn / Direct Answer, 40-60 từ. Tuân thủ QUY TẮC VIẾT SAPO bên dưới. Văn bản thuần, KHÔNG chứa ** hoặc thẻ HTML.)",
   "content": "string (Nội dung chi tiết định dạng HTML, bắt đầu trực tiếp từ thẻ '<p><strong>Câu hỏi:</strong></p>' trở đi. TUYỆT ĐỐI KHÔNG lặp lại tiêu đề H1 và phần Direct Answer / Sapo trong trường 'content' này)",
   "references": ["string"],
   "seoMeta": {
@@ -885,6 +885,26 @@ OUTPUT JSON BẮT BUỘC:
   "category": "Hỏi đáp",
   "tags": ["string"]
 }
+
+QUY TẮC VIẾT SAPO (MÔ TẢ NGẮN) — BẮT BUỘC TUÂN THỦ NGHIÊM NGẶT:
+
+1. Quy tắc Chủ ngữ câu 1 (Kỹ thuật Danh từ hóa):
+Không bắt đầu câu bằng các đại từ như "Bé", "Trẻ", "Người bệnh" hay các từ dẫn dắt dài dòng. Bắt buộc phải paraphrase (biến đổi) trực tiếp [Từ khóa] thành một CỤM DANH TỪ và đặt làm chủ ngữ chính của câu.
+
+2. Quy tắc Trả lời trực tiếp (Search Intent):
+Ngay sau cụm chủ ngữ ở câu 1, phải đưa ra ngay kết luận/câu trả lời y khoa chính xác nhất cho vấn đề mà từ khóa đề cập. Không rào trước đón sau.
+
+3. Quy tắc Câu 2 (Actionable Advice):
+Đưa ra một lời khuyên hành động, hướng dẫn theo dõi hoặc lưu ý y khoa quan trọng liên quan đến tình trạng ở câu 1.
+
+4. Quy tắc Văn phong:
+Súc tích, khách quan, mang tính chuyên môn cao nhưng từ ngữ dễ hiểu. TUYỆT ĐỐI KHÔNG sử dụng các mẫu câu rập khuôn, thừa thãi của AI như: "Bài viết này sẽ giúp bạn...", "Hãy cùng tìm hiểu...", "Tình trạng này sẽ tự khỏi mà không cần can thiệp y tế".
+
+VÍ DỤ SAPO MẪU (Few-shot):
+- Từ khóa: "Bé uống Rotarix bị nôn trớ"
+  → Sapo: "Nôn trớ sau khi uống vắc xin Rotarix ở bé thường là tác dụng phụ khá phổ biến và ở mức độ nhẹ. Tuy nhiên, cha mẹ vẫn nên theo dõi để phát hiện dấu hiệu bất thường."
+- Từ khóa: "Khám phụ khoa có phát hiện được ung thư cổ tử cung không?"
+  → Sapo: "Việc khám phụ khoa để phát hiện sớm ung thư cổ tử cung sẽ không thể mang lại kết quả chính xác nếu bỏ qua các xét nghiệm tầm soát chuyên biệt. Tuy nhiên, đây vẫn là bước khám lâm sàng nền tảng quan trọng mà chị em cần duy trì định kỳ."
 
 BẮT BUỘC TUÂN THỦ CẤU TRÚC TRONG TRƯỜNG "content" (HTML):
 TUYỆT ĐỐI KHÔNG được sử dụng thẻ tiêu đề Markdown (##) hay bất kỳ Heading H2/H3 nào cho các mục. Chỉ sử dụng các thẻ HTML được chỉ định dưới đây:
@@ -948,7 +968,7 @@ GIỌNG VĂN:
     'Bắt buộc dùng mẫu in nghiêng đục lỗ ở phần mở đầu Bác sĩ giải đáp.',
     'Không tự kê đơn thuốc cụ thể.',
     'Bắt buộc có Disclaimer ở cuối bài.',
-    'Sapo nhận câu trả lời thẳng trực tiếp (40-60 từ), tuyệt đối không chứa **.',
+    'Sapo 40-60 từ: Câu 1 danh từ hóa keyword + trả lời trực tiếp, Câu 2 lời khuyên hành động. Văn phong chống AI. Không chứa **.',
     'Không tạo phần câu hỏi liên quan (FAQ).',
   ],
 };

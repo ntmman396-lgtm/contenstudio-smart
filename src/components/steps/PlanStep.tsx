@@ -174,7 +174,9 @@ export default function PlanStep({
       }
 
       const articles = await res.json();
-      await exportBatchToZip(articles, `batch_${new Date().toISOString().slice(0, 10)}`);
+      // Inject keyword from rawFields for filename
+      const articlesWithKeyword = articles.map((a: any) => ({ ...a, keyword: a.rawFields?.keywordChinh || a.keyword }));
+      await exportBatchToZip(articlesWithKeyword, `batch_${new Date().toISOString().slice(0, 10)}`);
     } catch (error) {
       console.error('DOCX export error:', error);
       alert('❌ Lỗi khi export DOCX. Vui lòng thử lại.');

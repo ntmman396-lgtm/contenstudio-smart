@@ -53,6 +53,7 @@ export async function POST(request: NextRequest) {
         tags: true,
         templateName: true,
         createdAt: true,
+        rawFields: true,
       },
       orderBy: { createdAt: 'asc' },
     });

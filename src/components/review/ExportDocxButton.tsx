@@ -27,10 +27,12 @@ export default function ExportDocxButton({ articleId, articleTitle, fullWidth = 
       if (!res.ok) throw new Error('Failed to fetch article');
       const data = await res.json();
       if (data.length > 0) {
-        const title = articleTitle
-          ? articleTitle.replace(/[^a-zA-Z0-9\u00C0-\u024F\u1E00-\u1EFF\s-]/g, '').replace(/\s+/g, '_').slice(0, 50)
-          : 'article';
-        await exportBatchToDocx(data, title);
+        // Use keyword from rawFields for filename, fallback to articleTitle/title
+        const keyword = data[0].rawFields?.keywordChinh;
+        const title = (keyword || articleTitle || data[0].title || 'article')
+          .replace(/[^a-zA-Z0-9\u00C0-\u024F\u1E00-\u1EFF\s-]/g, '').replace(/\s+/g, '_').slice(0, 50);
+        const articlesWithKeyword = data.map((a: any) => ({ ...a, keyword: a.rawFields?.keywordChinh || a.keyword }));
+        await exportBatchToDocx(articlesWithKeyword, title);
       }
     } catch (error) {
       console.error('DOCX export error:', error);

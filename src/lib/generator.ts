@@ -363,6 +363,7 @@ export async function generateSingleArticle(
     createdAt: new Date().toISOString(),
     rawFields: {
       ...(raw.faq ? { faq: typeof raw.faq === 'string' ? raw.faq : JSON.stringify(raw.faq) } : {}),
+      ...(batchItem.keyword ? { keywordChinh: batchItem.keyword } : {}),
     },
   };
 
