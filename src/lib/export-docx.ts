@@ -383,22 +383,20 @@ async function buildArticleChildren(article: ExportArticle): Promise<Paragraph[]
   }
 
   // ── Tags ──
-  if (article.tags && article.tags.length > 0) {
-    children.push(
-      new Paragraph({
-        spacing: { after: 100 },
-        children: [
-          new TextRun({
-            text: `Tags: ${article.tags.join(', ')}`,
-            font: 'Times New Roman',
-            size: 18,
-            color: '666666',
-            italics: true,
-          }),
-        ],
-      })
-    );
-  }
+  children.push(
+    new Paragraph({
+      spacing: { after: 100 },
+      children: [
+        new TextRun({
+          text: `Tags: ${article.tags && article.tags.length > 0 ? article.tags.join(', ') : ''}`,
+          font: 'Times New Roman',
+          size: 18,
+          color: '666666',
+          italics: true,
+        }),
+      ],
+    })
+  );
 
   // ── SEO Meta ──
   if (article.seoMeta) {

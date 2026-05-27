@@ -72,7 +72,7 @@ function buildSingleUserPrompt(
   const userTags = item.tags || settings.tags;
   const tagsInstruction = userTags && userTags.length > 0
     ? `Tags BẮT BUỘC: ${JSON.stringify(userTags)} — SỬ DỤNG CHÍNH XÁC danh sách tags này cho trường "tags" trong JSON output. KHÔNG tự thêm hoặc thay đổi.\n`
-    : '';
+    : 'BẮT BUỘC trường "tags" trong JSON output phải là mảng rỗng []. Tuyệt đối KHÔNG được tự động điền hay sinh thêm tags.\n';
 
   // Internal links
   const internalLinks = settings.internalLinks;
@@ -146,7 +146,7 @@ JSON schema bắt buộc:
   "references": ["danh sách nguồn tham khảo ứng dụng ĐÚNG quy chuẩn số 9"],
   "seoMeta": { "title": "≤60 ký tự", "description": "≤160 ký tự" },
   "category": "${categoryValue}",
-  "tags": ${userTags && userTags.length > 0 ? JSON.stringify(userTags) : '["tag1", "tag2"]'},
+  "tags": ${userTags && userTags.length > 0 ? JSON.stringify(userTags) : '[]'},
   "faq": ${settings.templateId === 'hoi-dap-bac-si' || settings.templateId === 'hoi-dap' ? '[]' : '[{"question": "Câu hỏi ngắn gọn", "answer": "Câu trả lời trực tiếp (Luôn tạo 5 câu FAQ nếu bài thuộc chuyên mục Bệnh Lý. Đây là bắt buộc, không phụ thuộc vào dàn ý.)"}]'}
 }
 
@@ -354,7 +354,7 @@ export async function generateSingleArticle(
       ? batchItem.tags 
       : (settings.tags && settings.tags.length > 0) 
         ? settings.tags 
-        : (raw.tags as string[]) || [],
+        : [],
 
     templateId: settings.templateId,
     templateName: templateName,
