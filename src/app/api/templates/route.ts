@@ -14,6 +14,23 @@ function fromJson(value: string | null): any {
   try { return JSON.parse(value); } catch { return undefined; }
 }
 
+// Helper: build upsert data object (shared by bulk and single)
+function buildUpsertData(t: ContentTemplate) {
+  return {
+    name: t.name,
+    icon: t.icon,
+    stepCount: t.stepCount,
+    steps: toJson(t.steps),
+    estimatedWords: toJson(t.estimatedWords),
+    systemPrompt: t.systemPrompt,
+    outline: toJson(t.outline),
+    requiredFields: toJson(t.requiredFields),
+    notes: toJson(t.notes),
+    sites: toJson(t.sites || ['nha-thuoc', 'tiem-chung']),
+    sitePromptOverrides: toJson(t.sitePromptOverrides),
+  };
+}
+
 export async function GET() {
   try {
     const templates = await prisma.template.findMany({
@@ -31,8 +48,8 @@ export async function GET() {
       outline: fromJson(t.outline) || [],
       requiredFields: fromJson(t.requiredFields) || [],
       notes: fromJson(t.notes) || [],
-      sites: fromJson((t as any).sites) || ['nha-thuoc', 'tiem-chung'],
-      sitePromptOverrides: fromJson((t as any).sitePromptOverrides) || undefined,
+      sites: fromJson(t.sites) || ['nha-thuoc', 'tiem-chung'],
+      sitePromptOverrides: fromJson(t.sitePromptOverrides) || undefined,
     }));
 
     return NextResponse.json(formatted);
@@ -50,31 +67,11 @@ export async function POST(request: Request) {
       const results = [];
       for (const t of body as ContentTemplate[]) {
          try {
+           const data = buildUpsertData(t);
            const template = await prisma.template.upsert({
              where: { id: t.id },
-             update: {
-                name: t.name,
-                icon: t.icon,
-                stepCount: t.stepCount,
-                steps: toJson(t.steps),
-                estimatedWords: toJson(t.estimatedWords),
-                systemPrompt: t.systemPrompt,
-                outline: toJson(t.outline),
-                requiredFields: toJson(t.requiredFields),
-                notes: toJson(t.notes)
-             },
-             create: {
-                id: t.id,
-                name: t.name,
-                icon: t.icon,
-                stepCount: t.stepCount,
-                steps: toJson(t.steps),
-                estimatedWords: toJson(t.estimatedWords),
-                systemPrompt: t.systemPrompt,
-                outline: toJson(t.outline),
-                requiredFields: toJson(t.requiredFields),
-                notes: toJson(t.notes)
-             }
+             update: data,
+             create: { id: t.id, ...data },
            });
            results.push(template.id);
          } catch(e) {}
@@ -87,31 +84,11 @@ export async function POST(request: Request) {
     }
 
     const t = body as ContentTemplate;
+    const data = buildUpsertData(t);
     const template = await prisma.template.upsert({
       where: { id: t.id },
-      update: {
-         name: t.name,
-         icon: t.icon,
-         stepCount: t.stepCount,
-         steps: toJson(t.steps),
-         estimatedWords: toJson(t.estimatedWords),
-         systemPrompt: t.systemPrompt,
-         outline: toJson(t.outline),
-         requiredFields: toJson(t.requiredFields),
-         notes: toJson(t.notes)
-      },
-      create: {
-         id: t.id,
-         name: t.name,
-         icon: t.icon,
-         stepCount: t.stepCount,
-         steps: toJson(t.steps),
-         estimatedWords: toJson(t.estimatedWords),
-         systemPrompt: t.systemPrompt,
-         outline: toJson(t.outline),
-         requiredFields: toJson(t.requiredFields),
-         notes: toJson(t.notes)
-      }
+      update: data,
+      create: { id: t.id, ...data },
     });
 
     return NextResponse.json({ id: template.id });

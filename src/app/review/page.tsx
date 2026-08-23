@@ -30,10 +30,10 @@ const scoreBg = (score: number) => {
 
 type ViewMode = 'list' | 'editor' | 'strapi';
 
-/** Templates that use the Strapi-style detail view instead of split-section editor */
-const STRAPI_VIEW_TEMPLATES = new Set(['gsk-blog', 'hoi-dap-bac-si', 'benh-ly', 'duoc-chat']);
+/** Templates that use the old split-section editor view */
+const EDITOR_VIEW_TEMPLATES = new Set([]);
 const getViewModeForTemplate = (templateId: string): ViewMode =>
-  STRAPI_VIEW_TEMPLATES.has(templateId) ? 'strapi' : 'editor';
+  EDITOR_VIEW_TEMPLATES.has(templateId) ? 'editor' : 'strapi';
 
 function ReviewQueueContent() {
   const [articles, setArticles] = useState<GeneratedArticle[]>([]);

@@ -26,7 +26,7 @@ export default function UploadStep({ sources, onSourcesChange }: UploadStepProps
     e.preventDefault();
     setIsDragging(false);
     const files = Array.from(e.dataTransfer.files).filter(
-      (f) => f.type === 'application/pdf'
+      (f) => f.type === 'application/pdf' || f.type === 'text/plain' || f.type === 'text/markdown' || f.name.endsWith('.md') || f.name.endsWith('.txt')
     );
     const newSources: UploadedSource[] = files.map((file) => ({
       id: `src-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
@@ -109,7 +109,7 @@ export default function UploadStep({ sources, onSourcesChange }: UploadStepProps
       >
         <input
           type="file"
-          accept=".pdf"
+          accept=".pdf,.md,.txt"
           multiple
           onChange={handleFileSelect}
           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
@@ -126,7 +126,7 @@ export default function UploadStep({ sources, onSourcesChange }: UploadStepProps
           </div>
           <div>
             <p className="text-sm font-semibold text-[var(--text-primary)]">
-              Kéo thả file PDF vào đây
+              Kéo thả file PDF, Text, Markdown vào đây
             </p>
             <p className="text-xs text-[var(--text-muted)] mt-1">
               hoặc click để chọn file • Hỗ trợ nhiều file cùng lúc
@@ -187,7 +187,7 @@ export default function UploadStep({ sources, onSourcesChange }: UploadStepProps
                     {source.name}
                   </p>
                   <p className="text-[11px] text-[var(--text-muted)]">
-                    {source.type === 'pdf' ? `PDF • ${formatSize(source.size)}` : 'URL'}
+                    {source.type === 'pdf' ? `${source.name.split('.').pop()?.toUpperCase() || 'FILE'} • ${formatSize(source.size)}` : 'URL'}
                   </p>
                 </div>
                 <button

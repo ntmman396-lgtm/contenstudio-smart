@@ -149,6 +149,30 @@ function TemplateDetail({
     setIsDirty(true);
   };
 
+  const handleAutoParseOutline = () => {
+    const lines = template.systemPrompt.split('\n');
+    const newOutline: OutlineSection[] = [];
+    let currentH2: OutlineSection | null = null;
+    
+    for (let line of lines) {
+      line = line.trim();
+      if (line.startsWith('H2:')) {
+        currentH2 = { type: 'h2', label: line.substring(3).trim(), children: [] };
+        newOutline.push(currentH2);
+      } else if (line.startsWith('H3:') && currentH2) {
+        currentH2.children = currentH2.children || [];
+        currentH2.children.push({ type: 'h3', label: line.substring(3).trim() });
+      }
+    }
+    
+    if (newOutline.length > 0) {
+      updateField('outline', newOutline);
+      alert(`Đã trích xuất ${newOutline.length} thẻ H2 từ System Prompt!`);
+    } else {
+      alert('Không tìm thấy cấu trúc H2/H3 trong System Prompt. Vui lòng kiểm tra lại cấu trúc: "H2: Tiêu đề"');
+    }
+  };
+
   const tabs = [
     { id: 'outline' as const, label: 'Outline & Cấu trúc', icon: '🏗️' },
     { id: 'prompt' as const, label: 'System Prompt', icon: '🤖' },
@@ -251,31 +275,77 @@ function TemplateDetail({
                 <h3 className="text-sm font-bold text-[var(--text-primary)]">
                   Cấu trúc bài viết (Outline)
                 </h3>
-                <div className="flex items-center gap-3 text-[10px]">
-                  <span className="flex items-center gap-1"><span className="w-2 h-2 rounded bg-blue-500/40" /> H2</span>
-                  <span className="flex items-center gap-1"><span className="w-2 h-2 rounded bg-cyan-500/40" /> H3</span>
-                  <span className="flex items-center gap-1"><span className="w-2 h-2 rounded bg-amber-500/40" /> Meta</span>
-                  <span className="flex items-center gap-1"><span className="w-2 h-2 rounded bg-red-500/40" /> Required</span>
+                <div className="flex items-center gap-3">
+                  <button 
+                    onClick={handleAutoParseOutline}
+                    className="text-xs px-3 py-1.5 rounded-lg bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 font-medium transition-colors"
+                  >
+                    ✨ Auto-parse từ Prompt
+                  </button>
+                  <div className="flex items-center gap-2 text-[10px] ml-4">
+                    <span className="flex items-center gap-1"><span className="w-2 h-2 rounded bg-blue-500/40" /> H2</span>
+                    <span className="flex items-center gap-1"><span className="w-2 h-2 rounded bg-cyan-500/40" /> H3</span>
+                    <span className="flex items-center gap-1"><span className="w-2 h-2 rounded bg-amber-500/40" /> Meta</span>
+                  </div>
                 </div>
               </div>
-              <OutlineTree sections={template.outline} />
+              
+              <div className="grid grid-cols-2 gap-6">
+                <div>
+                  <h4 className="text-xs font-semibold text-[var(--text-muted)] mb-2 uppercase tracking-wider">Preview Tree</h4>
+                  <div className="bg-[var(--bg-secondary)] p-3 rounded-lg border border-[var(--border-default)] min-h-[200px]">
+                    <OutlineTree sections={template.outline || []} />
+                  </div>
+                </div>
+                <div>
+                  <h4 className="text-xs font-semibold text-[var(--text-muted)] mb-2 uppercase tracking-wider">Edit JSON</h4>
+                  <textarea 
+                    value={JSON.stringify(template.outline || [], null, 2)}
+                    onChange={(e) => {
+                      try {
+                        const val = JSON.parse(e.target.value);
+                        updateField('outline', val);
+                      } catch(err) {}
+                    }}
+                    className="w-full min-h-[200px] p-3 text-xs font-mono text-[var(--text-secondary)] bg-[var(--bg-secondary)] border border-[var(--border-default)] rounded-lg resize-y outline-none focus:border-blue-500/30"
+                    spellCheck={false}
+                  />
+                </div>
+              </div>
             </div>
 
             {/* Required fields */}
             <div className="glass-card p-5 rounded-xl">
-              <h3 className="text-sm font-bold text-[var(--text-primary)] mb-3">
-                Required Fields (Strapi)
+              <h3 className="text-sm font-bold text-[var(--text-primary)] mb-3 flex items-center justify-between">
+                <span>Required Fields (Strapi)</span>
               </h3>
-              <div className="flex flex-wrap gap-2">
-                {template.requiredFields.map((field) => (
-                  <span
-                    key={field}
-                    className="px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-red-500/10 text-red-400 border border-red-500/20 flex items-center gap-1.5"
-                  >
-                    <span className="text-red-400">*</span>
-                    {field}
-                  </span>
-                ))}
+              <div className="grid grid-cols-2 gap-6">
+                <div>
+                  <div className="flex flex-wrap gap-2">
+                    {(template.requiredFields || []).map((field) => (
+                      <span
+                        key={field}
+                        className="px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-red-500/10 text-red-400 border border-red-500/20 flex items-center gap-1.5"
+                      >
+                        <span className="text-red-400">*</span>
+                        {field}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <textarea 
+                    value={JSON.stringify(template.requiredFields || [], null, 2)}
+                    onChange={(e) => {
+                      try {
+                        const val = JSON.parse(e.target.value);
+                        updateField('requiredFields', val);
+                      } catch(err) {}
+                    }}
+                    className="w-full h-[100px] p-3 text-xs font-mono text-[var(--text-secondary)] bg-[var(--bg-secondary)] border border-[var(--border-default)] rounded-lg outline-none focus:border-red-500/30"
+                    spellCheck={false}
+                  />
+                </div>
               </div>
             </div>
 

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { extractFromPDF, extractFromURL } from '@/lib/source-extractor';
+import { extractFromPDF, extractFromURL, extractFromTextFile } from '@/lib/source-extractor';
 
 export async function POST(request: NextRequest) {
   try {
@@ -13,11 +13,15 @@ export async function POST(request: NextRequest) {
 
       const results = [];
 
-      // Extract from PDF files
+      // Extract from PDF and text files
       for (const file of files) {
         if (file.type === 'application/pdf') {
           const buffer = Buffer.from(await file.arrayBuffer());
           const extracted = await extractFromPDF(buffer, file.name);
+          results.push(extracted);
+        } else if (file.type === 'text/plain' || file.type === 'text/markdown' || file.name.endsWith('.md') || file.name.endsWith('.txt')) {
+          const buffer = Buffer.from(await file.arrayBuffer());
+          const extracted = await extractFromTextFile(buffer, file.name);
           results.push(extracted);
         }
       }

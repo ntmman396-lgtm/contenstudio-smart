@@ -43,8 +43,8 @@ export default function ArticleDetail(props: ArticleDetailProps) {
     return <HoiDapBacSiDetail {...props} />;
   }
 
-  // Fallback to Generic layout
-  return <GenericDetail {...props} />;
+  // Fallback to BlogGSKDetail (which now acts as a rich generic layout with all features)
+  return <BlogGSKDetail {...props} />;
 }
 
 // ─── Generic Layout (for other templates) ───────────────────

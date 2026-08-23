@@ -150,18 +150,20 @@ model InternalLink {
 }
 
 model Template {
-  id             String   @id
-  name           String
-  icon           String?
-  stepCount      Int      @default(0)
-  steps          String?  // JSON string
-  estimatedWords String?  // JSON string {min, max}
-  systemPrompt   String?
-  outline        String?  // JSON string
-  requiredFields String?  // JSON string
-  notes          String?  // JSON string
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  id                 String   @id
+  name               String
+  icon               String?
+  stepCount          Int      @default(0)
+  steps              String?  // JSON string
+  estimatedWords     String?  // JSON string {min, max}
+  systemPrompt       String?
+  outline            String?  // JSON string
+  requiredFields     String?  // JSON string
+  notes              String?  // JSON string
+  sites              String?  // JSON string — SiteId[] e.g. ["nha-thuoc","tiem-chung"]
+  sitePromptOverrides String? // JSON string — Partial<Record<SiteId, string>>
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 
   @@map("templates")
 }

@@ -29,6 +29,22 @@ export async function extractFromPDF(buffer: Buffer, fileName: string): Promise<
 }
 
 /**
+ * Extract text content from a plain text or markdown file.
+ */
+export async function extractFromTextFile(buffer: Buffer, fileName: string): Promise<ExtractedSource> {
+  const text = buffer.toString('utf-8');
+  
+  return {
+    text: text.trim(),
+    metadata: {
+      title: fileName.replace(/\.(md|txt)$/i, ''),
+      source: fileName,
+      wordCount: text.split(/\s+/).filter(Boolean).length,
+    },
+  };
+}
+
+/**
  * Extract main content from a URL using cheerio.
  * Strips navigation, footer, sidebar, scripts, and ads.
  */

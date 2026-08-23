@@ -82,6 +82,13 @@ export async function ingestSource(
         
       extractedText = mainContent.text();
       detectedLang = franc(extractedText.substring(0, 1000));
+    } else if (source.source_type === 'manual' && source.file_path) {
+      if (!fs.existsSync(source.file_path)) {
+        throw new Error('Text/Markdown file not found at path');
+      }
+      extractedText = fs.readFileSync(source.file_path, 'utf8');
+      extractedTitle = 'Tài liệu Văn bản/Markdown';
+      detectedLang = franc(extractedText.substring(0, 1000));
     } else {
       throw new Error(`Unsupported source type or missing path/url: ${source.source_type}`);
     }

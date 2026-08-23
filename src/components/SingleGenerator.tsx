@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { TEMPLATES, getOutline, getTemplatesForSite } from '@/lib/templates';
+import { getOutline, ContentTemplate } from '@/lib/templates';
 import { BatchConfig, BatchPlanItem } from '@/types';
 import { saveGeneratedArticle } from '@/lib/storage';
 import { useSite } from '@/contexts/SiteContext';
@@ -12,7 +12,9 @@ export default function SingleGenerator() {
   const router = useRouter();
   const { currentSite } = useSite();
 
-  const filteredTemplates = getTemplatesForSite(currentSite);
+  // Dynamic templates from DB API (replaces hardcoded TEMPLATES)
+  const [filteredTemplates, setFilteredTemplates] = useState<ContentTemplate[]>([]);
+  const [isLoadingTemplates, setIsLoadingTemplates] = useState(true);
 
   const [selectedTemplateId, setSelectedTemplateId] = useState<string>('');
   const [title, setTitle] = useState('');
@@ -70,19 +72,28 @@ export default function SingleGenerator() {
       } catch (e) {}
     }
 
-    // Load categories, tags, internal links from DB APIs (scoped to current site)
+    // Load templates + categories + tags + links from DB APIs (scoped to current site)
     const fetchData = async () => {
       try {
-        const [catsRes, tagsRes, linksRes] = await Promise.all([
+        const [templatesRes, catsRes, tagsRes, linksRes] = await Promise.all([
+          fetch('/api/templates'),
           fetch(`/api/data/categories?siteId=${currentSite}`),
           fetch(`/api/data/tags?siteId=${currentSite}`),
           fetch(`/api/data/links?siteId=${currentSite}`)
         ]);
+        // Templates from DB
+        if (templatesRes.ok) {
+          const allTemplates: ContentTemplate[] = await templatesRes.json();
+          const siteFiltered = allTemplates.filter(t => t.sites?.includes(currentSite));
+          setFilteredTemplates(siteFiltered);
+        }
         if (catsRes.ok) setCategories(await catsRes.json());
         if (tagsRes.ok) setSavedTags(await tagsRes.json());
         if (linksRes.ok) setInternalLinks((await linksRes.json()).map((l:any)=>({anchor:l.anchor, url:l.url})));
       } catch (e) {
         console.error('Lỗi load DB data', e);
+      } finally {
+        setIsLoadingTemplates(false);
       }
     };
     fetchData();
@@ -238,7 +249,12 @@ export default function SingleGenerator() {
   if (!title.trim()) missingFields.push('Tiêu đề');
   if (!outline.trim()) missingFields.push('Dàn ý');
 
-  const selectedOutline = selectedTemplateId ? getOutline(selectedTemplateId) : [];
+  // Try static outline first, then fallback to DB template outline
+  const selectedOutline = selectedTemplateId
+    ? (getOutline(selectedTemplateId).length > 0
+        ? getOutline(selectedTemplateId)
+        : (filteredTemplates.find(t => t.id === selectedTemplateId)?.outline || []))
+    : [];
 
   return (
     <main className="flex-1 h-screen overflow-y-auto bg-[var(--bg-primary)]">
@@ -268,24 +284,32 @@ export default function SingleGenerator() {
                 <span className="w-6 h-6 rounded bg-[var(--lc-primary)]/20 text-[var(--lc-primary)] flex items-center justify-center text-xs">1</span> 
                 Chọn Template (Bắt buộc)
               </h3>
-              <div className="grid grid-cols-2 gap-3">
-                {filteredTemplates.map((tmpl) => (
-                  <button
-                    key={tmpl.id}
-                    onClick={() => setSelectedTemplateId(tmpl.id)}
-                    className={`
-                      text-left p-3 rounded-xl border transition-all duration-200
-                      ${selectedTemplateId === tmpl.id 
-                        ? 'bg-[var(--lc-primary)]/10 border-[var(--lc-primary)] shadow-[0_0_15px_rgba(0,102,204,0.15)]' 
-                        : 'bg-[var(--bg-card-hover)] border-[var(--border-default)] hover:bg-[var(--bg-card-hover)]'}
-                    `}
-                  >
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-sm font-bold text-[var(--text-primary)]">{tmpl.name}</span>
-                    </div>
-                  </button>
-                ))}
-              </div>
+              {isLoadingTemplates ? (
+                <div className="flex items-center justify-center py-8">
+                  <div className="w-5 h-5 border-2 border-blue-400 border-t-transparent rounded-full animate-spin" />
+                  <span className="ml-2 text-xs text-[var(--text-muted)]">Đang tải templates...</span>
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 gap-3">
+                  {filteredTemplates.map((tmpl) => (
+                    <button
+                      key={tmpl.id}
+                      onClick={() => setSelectedTemplateId(tmpl.id)}
+                      className={`
+                        text-left p-3 rounded-xl border transition-all duration-200
+                        ${selectedTemplateId === tmpl.id 
+                          ? 'bg-[var(--lc-primary)]/10 border-[var(--lc-primary)] shadow-[0_0_15px_rgba(0,102,204,0.15)]' 
+                          : 'bg-[var(--bg-card-hover)] border-[var(--border-default)] hover:bg-[var(--bg-card-hover)]'}
+                      `}
+                    >
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-lg">{tmpl.icon || '📄'}</span>
+                        <span className="text-sm font-bold text-[var(--text-primary)]">{tmpl.name}</span>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              )}
 
               {selectedOutline.length > 0 && (
                 <div className="mt-4 p-4 rounded-xl relative border border-[var(--border-default)] bg-[var(--bg-card-hover)]">

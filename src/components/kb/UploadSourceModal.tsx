@@ -67,6 +67,31 @@ export default function UploadSourceModal({ isOpen, onClose, onComplete }: Uploa
 
   if (!isOpen) return null;
 
+  const handleCsvUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const text = event.target?.result as string;
+      if (text) {
+        // Extract URLs from CSV/TXT: split by comma, newline, or whitespace, and filter valid URLs
+        const extractedUrls = text.split(/[\n,;]+/).map(s => s.trim()).filter(s => s.startsWith('http'));
+        if (extractedUrls.length > 0) {
+           setUrlInput(prev => {
+             const existingUrls = prev ? prev + '\n' : '';
+             return existingUrls + extractedUrls.join('\n');
+           });
+        } else {
+           alert('Không tìm thấy link hợp lệ nào (bắt đầu bằng http) trong file này.');
+        }
+      }
+    };
+    reader.readAsText(file);
+    // Reset input
+    e.target.value = '';
+  };
+
   const simulatePipeline = () => {
     setIsProcessing(true);
     setProgress(0);
@@ -93,7 +118,7 @@ export default function UploadSourceModal({ isOpen, onClose, onComplete }: Uploa
         
         let initialTitle = 'Nguồn tài liệu mới';
         if (selectedFile) {
-          initialTitle = selectedFile.name.replace('.pdf', '');
+          initialTitle = selectedFile.name.replace(/\.(pdf|md|txt)$/i, '');
         } else if (urlCount === 1) {
           try { initialTitle = 'Bài viết học thuật từ ' + new URL(urls[0]).hostname; } catch(e){}
         } else if (urlCount > 1) {
@@ -103,7 +128,7 @@ export default function UploadSourceModal({ isOpen, onClose, onComplete }: Uploa
         setFormData(prev => ({
           ...prev,
           title: initialTitle,
-          publisher: selectedFile ? 'Tài liệu PDF' : 'Nguồn Web',
+          publisher: selectedFile ? (selectedFile.name.endsWith('.pdf') ? 'Tài liệu PDF' : 'Tài liệu Văn bản') : 'Nguồn Web',
           topic_tags: 'tiểu đường, gan nhiễm mỡ',
           scope: urlCount > 1 ? 'general' : 'specific'
         }));
@@ -148,7 +173,7 @@ export default function UploadSourceModal({ isOpen, onClose, onComplete }: Uploa
     const newSource: KBSource = {
       id: `src-${Date.now()}`,
       title: formData.title,
-      source_type: 'pdf',
+      source_type: selectedFile?.name.match(/\.(md|txt)$/i) ? 'manual' : 'pdf', // Use manual type for text/md
       language: formData.language,
       publisher: formData.publisher,
       publish_year: formData.publish_year,
@@ -188,7 +213,7 @@ export default function UploadSourceModal({ isOpen, onClose, onComplete }: Uploa
                    onClick={() => setActiveTab('pdf')} 
                    className={`flex-1 py-2 flex justify-center items-center gap-2 text-sm font-medium rounded-md transition-colors ${activeTab === 'pdf' ? 'bg-[var(--bg-primary)] shadow text-[var(--lc-primary)]' : 'text-[var(--text-secondary)] hover:text-white'}`}
                  >
-                   <FileText size={16} /> Upload PDF
+                   <FileText size={16} /> Upload File (PDF, MD, TXT)
                  </button>
                  <button 
                    onClick={() => setActiveTab('url')} 
@@ -202,7 +227,7 @@ export default function UploadSourceModal({ isOpen, onClose, onComplete }: Uploa
                 <div className="border-2 border-dashed border-[var(--border-default)] hover:border-[var(--lc-primary)] rounded-xl py-12 flex flex-col items-center justify-center text-center transition-colors cursor-pointer group bg-[var(--bg-secondary)]"
                      onClick={() => document.getElementById('pdf-upload')?.click()}
                 >
-                  <input type="file" id="pdf-upload" accept="application/pdf" className="hidden" onChange={(e) => e.target.files && setSelectedFile(e.target.files[0])} />
+                  <input type="file" id="pdf-upload" accept=".pdf,.md,.txt" className="hidden" onChange={(e) => e.target.files && setSelectedFile(e.target.files[0])} />
                   <div className="w-16 h-16 rounded-full bg-[var(--lc-primary)]/10 text-[var(--lc-primary)] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                     <UploadCloud size={32} />
                   </div>
@@ -213,14 +238,25 @@ export default function UploadSourceModal({ isOpen, onClose, onComplete }: Uploa
                     </>
                   ) : (
                     <>
-                      <p className="font-bold text-[var(--text-primary)] mb-1">Click hoặc kéo thả file PDF vào đây</p>
-                      <p className="text-sm text-[var(--text-secondary)]">Dung lượng tối đa 50MB</p>
+                      <p className="font-bold text-[var(--text-primary)] mb-1">Click hoặc kéo thả file vào đây</p>
+                      <p className="text-sm text-[var(--text-secondary)]">Hỗ trợ PDF, Markdown (.md), Text (.txt) - Tối đa 50MB</p>
                     </>
                   )}
                 </div>
               ) : (
                 <div className="bg-[var(--bg-secondary)] p-6 rounded-xl border border-[var(--border-default)]">
-                   <label className="text-sm font-bold text-[var(--text-secondary)] mb-2 block">Nhập danh sách URL (Mỗi URL 1 dòng để Bulk Import)</label>
+                   <div className="flex justify-between items-center mb-2">
+                     <label className="text-sm font-bold text-[var(--text-secondary)]">Nhập danh sách URL (Mỗi URL 1 dòng để Bulk Import)</label>
+                     <div>
+                       <input type="file" id="csv-upload" accept=".csv,.txt" className="hidden" onChange={handleCsvUpload} />
+                       <button 
+                         onClick={() => document.getElementById('csv-upload')?.click()}
+                         className="text-xs flex items-center gap-1 bg-[var(--bg-primary)] px-3 py-1.5 rounded text-[var(--lc-primary)] border border-[var(--lc-primary)]/30 hover:bg-[var(--lc-primary)] hover:text-white transition-colors"
+                       >
+                         <UploadCloud size={14} /> Import từ CSV
+                       </button>
+                     </div>
+                   </div>
                    <textarea 
                      className="input-field w-full min-h-[120px] resize-y custom-scrollbar text-sm font-mono leading-relaxed"
                      placeholder="https://who.int/...&#10;https://pubmed.ncbi.nlm.nih.gov/...&#10;https://cdc.gov/..."

@@ -118,12 +118,12 @@ export default function BlogGSKDetail({ article, onSave, onPublish, onBack, onSo
         <div className="mb-6">
           <div className="flex items-center gap-3 mb-1">
             <span className="text-lg">📝</span>
-            <h1 className="text-xl font-bold text-[var(--text-primary)]">GSK Blog</h1>
+            <h1 className="text-xl font-bold text-[var(--text-primary)]">{article.templateName || 'Blog'}</h1>
             <span className={`badge text-[10px] ${article.status === 'approved' ? 'badge-success' : article.status === 'rejected' ? 'badge-danger' : 'badge-warning'}`}>
               {article.status === 'pending_review' ? 'DRAFT' : article.status.toUpperCase()}
             </span>
           </div>
-          <p className="text-xs text-[var(--text-muted)]">API ID : health-article &nbsp;·&nbsp; Template: GSK Blog</p>
+          <p className="text-xs text-[var(--text-muted)]">API ID : health-article &nbsp;·&nbsp; Template: {article.templateName || 'Blog'}</p>
         </div>
 
         <div className="flex gap-6">
@@ -373,7 +373,7 @@ export default function BlogGSKDetail({ article, onSave, onPublish, onBack, onSo
               <div className="space-y-2 text-[11px]">
                 <div className="flex justify-between">
                   <span className="text-[var(--text-muted)]">Template</span>
-                  <span className="text-[var(--text-secondary)] font-medium">GSK Blog</span>
+                  <span className="text-[var(--text-secondary)] font-medium">{article.templateName || 'Blog'}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-[var(--text-muted)]">Status</span>

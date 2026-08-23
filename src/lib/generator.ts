@@ -4,6 +4,7 @@ import { getTemplate, getSystemPromptForSite } from '@/lib/templates';
 import { retrieveForArticle } from '@/lib/kb/retrieval';
 import { extractCitations } from '@/lib/kb/citations';
 import { runQC } from '@/lib/qc/engine';
+import { extractUrlsFromText, scrapeUrlContent } from '@/lib/scraper';
 // ─── Gemini Client ──────────────────────────────────────────
 
 function getClient(): GoogleGenAI {
@@ -242,6 +243,30 @@ export async function generateSingleArticle(
     }
     templateName = dbTemplate.name;
     systemPrompt = dbTemplate.systemPrompt || '';
+  }
+
+  // Trigger On-the-fly URL Scraping
+  onProgress?.({
+    current: 0,
+    total: 1,
+    status: `Đang kiểm tra và tải nội dung từ các link nguồn...`,
+  });
+
+  const urlsToScrape = new Set(extractUrlsFromText(settings.sourceText));
+  if (batchItem.referenceLink) {
+    extractUrlsFromText(batchItem.referenceLink).forEach(url => urlsToScrape.add(url));
+  }
+
+  if (urlsToScrape.size > 0) {
+    const scrapePromises = Array.from(urlsToScrape).map(async (url) => {
+      const content = await scrapeUrlContent(url);
+      return `--- Nội dung trích xuất từ: ${url} ---\n${content}\n----------------------------------\n`;
+    });
+    
+    const scrapedResults = await Promise.all(scrapePromises);
+    
+    // Append scraped contents to the original source text
+    settings.sourceText = `${settings.sourceText}\n\n${scrapedResults.join('\n')}`;
   }
 
   // Trigger RAG KB Retrieval
