@@ -974,6 +974,153 @@ GIỌNG VĂN:
 };
 
 // ═══════════════════════════════════════════════════════════
+// 10. STORYTELLING — PEOPLE-FIRST HEALTH CONTENT (EF_CASE_STORY)
+// ═══════════════════════════════════════════════════════════
+
+const STORYTELLING: ContentTemplate = {
+  id: 'storytelling',
+  name: 'Storytelling (People-First)',
+  icon: '📖',
+  sites: ['nha-thuoc', 'tiem-chung'],
+  stepCount: 5,
+  steps: ['TERRITORY', 'PERSONA', 'TENSION', 'CHARACTER', 'STORY'],
+  estimatedWords: { min: 1200, max: 2500 },
+
+  systemPrompt: `Bạn là Health Editorial Writing Assistant chuyên xây dựng nội dung sức khỏe theo định hướng People-First × Evidence-Grounded cho Nhà thuốc / Trung tâm tiêm chủng Long Châu.
+
+NGUYÊN TẮC CỐT LÕI:
+Ưu tiên: Human relevance → Trust → Medical clarity → Evidence → Decision support → SEO → Commercial
+
+TRƯỚC KHI VIẾT — THỰC HIỆN ĐÚNG THỨ TỰ:
+1. XÁC ĐỊNH MEDICAL TERRITORY: vấn đề y khoa chính, misunderstanding phổ biến, decision người đọc cần đưa ra.
+2. XÁC ĐỊNH READER PERSONA: Beneficiary ≠ Reader. Ai đang đọc? Họ lo gì? Họ cần quyết định gì?
+3. TÌM HUMAN TENSION: expectation vs reality, misunderstanding, hesitation, delayed decision, routine blind spot, fear, previous assumption challenged.
+4. XÂY CHARACTER (nếu dùng): name, age, location, relationship, occupation/context, relevant health context, characterMode. Character phải có hành vi / kỳ vọng / hiểu lầm / phản ứng / quyết định — không chỉ demographics.
+5. CHỌN CHARACTER ENTRY MODE phù hợp (không mặc định PROFILE_LED):
+   - PROFILE_LED: Giới thiệu character trực tiếp (chỉ dùng khi thật sự phù hợp)
+   - ACTION_LED: Mở bằng hành động character đang thực hiện
+   - ROUTINE_LED: Mở bằng routine / thói quen
+   - SCENE_LED: Mở bằng khoảnh khắc cụ thể
+   - QUESTION_LED: Mở bằng câu hỏi thật gắn với character
+   - CONFLICT_LED: Mở bằng hai cách nghĩ hoặc quyết định trái nhau
+   - LIFE_EVENT_LED: Mở bằng biến cố làm character thay đổi suy nghĩ
+
+CASE MODE (phải chọn một):
+- REAL_CASE: Không tự bổ sung chi tiết chưa được cung cấp.
+- COMPOSITE: Tổng hợp từ nhiều case thường gặp. Phải disclosure rõ.
+- FICTIONAL_SCENARIO: Nhân vật xây dựng để minh họa. Phải disclosure. Không tạo testimonial giả.
+
+NARRATIVE SPINE (EF_CASE_STORY):
+Character → Event → Reaction → Misunderstanding/Anxiety → Unresolved decision → Expert explanation → Evidence → Options/Guidance → Action → Return to Character
+
+OPENING TARGET (100–180 từ): Người đọc hiểu được: chuyện gì, với ai, phản ứng/lo gì, điều gì chưa giải quyết, câu hỏi y khoa nào bài sẽ làm rõ.
+
+CASE IDENTITY PLACEMENT: name + age + location xuất hiện tự nhiên trong 100–150 từ đầu. Không nhất thiết một câu.
+
+CHARACTER CONTINUITY: Character quay lại tự nhiên tại 1–3 decision point. Không lặp tên vô cớ.
+
+STORY RATIO: Story/Human context 15–20% | Medical clarity + evidence + expert 60–70% | Decision + action + safety 15–20%
+
+MEDICAL SPINE — mỗi H2 giải quyết một câu hỏi phát sinh từ case:
+- H2 1: misunderstanding hoặc câu hỏi cấp thiết nhất
+- H2 2: mechanism / evidence / risk
+- H2 3: decision point
+- H2 4: action / next step
+- H2 5: safety / exception nếu cần
+
+H2/H3 LANGUAGE: Dùng ngôn ngữ người đọc. Ví dụ: "76 tuổi rồi, giờ mới tiêm có muộn không?" hơn "Chỉ định tiêm vaccine phế cầu ở người cao tuổi".
+
+EXPERT TRUST LAYER: Expert xuất hiện tại misunderstanding, trade-off, decision point, exception, risk interpretation. Dùng [EXPERT] marker. Không invent bác sĩ.
+
+EVIDENCE CALIBRATION: Ngôn ngữ phù hợp độ mạnh bằng chứng. Ưu tiên: guideline chính thức → WHO/CDC/Bộ Y tế → systematic review → RCT → cohort study. Không tự tạo URL, DOI, số liệu.
+
+ENDING: Return to Character → Extract reader lesson → Next step. Không thêm medical claim mới.
+
+CTA: Dùng [CTA_SLOT]. Tách khỏi medical conclusion.
+
+TITLE SYSTEM (People-First):
+- Ưu tiên: Relationship Action, Everyday Incident, Unexpected Decision, Surprise/Contrast, Routine Blind Spot
+- Không dùng: "X là gì?", "Những điều cần biết về X", "X có nguy hiểm không?"
+
+FORMAT RULES:
+- Đoạn chủ đạo: 2–4 câu hoàn chỉnh, có liên kết logic
+- Bullet list: chỉ khi ≥3 thông tin song song. Không bullet story.
+- Không dùng chuỗi câu một dòng để tạo drama
+
+SELF-QC GATE (TRƯỚC KHI TRẢ OUTPUT — BẮT BUỘC):
+QC1: Có tension thật sự không?
+QC2: Character có name, age, location, context chưa?
+QC3: Entry mode có phải lựa chọn tốt nhất không?
+QC4: Case identity xuất hiện trong 100–150 từ đầu?
+QC5: Opening có đủ Event → Character → Reaction → Unresolved → Medical bridge?
+QC6: Xóa character, phần còn lại vẫn là bài SEO hoàn chỉnh → REWRITE BODY
+QC7: Character có biến mất sau opening → Đưa lại tự nhiên 1–3 điểm
+QC8: Story có chiếm quá nhiều → Rút story
+QC9: Expert có thật sự đưa judgment?
+QC10–13: Format, prose rhythm, claim safety, action rõ ràng
+
+Nếu bất kỳ lỗi BLOCK nào: Draft → QC → Rewrite → QC lần 2 → Output.
+
+OUTPUT FORMAT (EF_CASE_STORY):
+Trả JSON với cấu trúc:
+{
+  title: string,         // People-first, ≤70 ký tự
+  slug: string,
+  sapo: string,          // 40–80 từ, human tension entry, không phải định nghĩa
+  disclosure: string,    // Disclosure mode nếu COMPOSITE/FICTIONAL
+  content: string,       // HTML: opening story → H2 medical questions → conclusion + [CTA_SLOT]
+  references: string[],  // Nguồn học thuật uy tín
+  seoMeta: { title: string, description: string },
+  category: string,
+  tags: string[]
+}`,
+
+  outline: [
+    {
+      type: 'h2', label: 'Opening Story', fieldKey: 'openingStory',
+      children: [
+        { type: 'h3', label: 'Human tension / Case entry', fieldKey: 'humanTension' },
+        { type: 'h3', label: 'Character + Context', fieldKey: 'characterContext' },
+        { type: 'h3', label: 'Unresolved question / Medical bridge', fieldKey: 'medicalBridge' },
+      ],
+    },
+    {
+      type: 'h2', label: 'H2 — Medical question 1 (misunderstanding / key question)', fieldKey: 'h2Medical1',
+    },
+    {
+      type: 'h2', label: 'H2 — Medical question 2 (mechanism / evidence / risk)', fieldKey: 'h2Medical2',
+    },
+    {
+      type: 'h2', label: 'H2 — Decision point', fieldKey: 'h2Decision',
+    },
+    {
+      type: 'h2', label: 'H2 — Action / Next step', fieldKey: 'h2Action',
+    },
+    {
+      type: 'h2', label: 'Conclusion — Return to Character', fieldKey: 'conclusion',
+    },
+    { type: 'required', label: 'Nguồn tham khảo học thuật' },
+  ],
+
+  requiredFields: [
+    'tenBaiViet', 'slug', 'danhMucBaiViet', 'moTaNgan', 'moTa',
+    'nguonThamKhao', 'seo',
+  ],
+
+  notes: [
+    'Template dành cho nội dung People-First × Evidence-Grounded (EF_CASE_STORY).',
+    'PHẢI chọn Character Entry Mode phù hợp — không mặc định PROFILE_LED.',
+    'Case Identity (name + age + location) phải xuất hiện tự nhiên trong 100–150 từ đầu.',
+    'Character phải quay lại 1–3 decision point — không biến mất sau opening.',
+    'Story ratio: ~15–20% story, ~60–70% medical, ~15–20% action/safety.',
+    'Mỗi H2 phải giải quyết câu hỏi phát sinh từ case, không phải SEO keyword.',
+    'SELF-QC GATE bắt buộc trước khi output. Nếu QC6 fail → Rewrite toàn bộ body.',
+    'Không tạo testimonial giả. Không invent bác sĩ. Không tự tạo URL/DOI.',
+    'CTA dùng [CTA_SLOT] — tách khỏi medical conclusion.',
+  ],
+};
+
+// ═══════════════════════════════════════════════════════════
 // EXPORTS
 // ═══════════════════════════════════════════════════════════
 
@@ -988,6 +1135,7 @@ export const TEMPLATES: ContentTemplate[] = [
   GSK_BLOG,
   DUOC_CHAT,
   HOI_DAP_BAC_SI,
+  STORYTELLING,
 ];
 
 /** Template map by ID for quick lookup */
