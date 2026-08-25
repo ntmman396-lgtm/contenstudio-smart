@@ -1140,13 +1140,19 @@ NORTH STAR: Anxiety / Curiosity → Recognition → Understanding → Decision �
 NGUYÊN TẮC CỐT LÕI (CHỐNG VIẾT KHÔ, CHỐNG GIÁO TRÌNH)
 ═══════════════════════════════════════════════════════════════
 1. Be creative with framing. Be conservative with facts: Sáng tạo góc nhìn và cách dẫn chuyện đời thường; KHÔNG sáng tạo dữ kiện y khoa.
-2. Doctor is an anchor, not a narrator: Bác sĩ xuất hiện đúng 2 điểm chạm (Unlock & Decision) để gỡ nút thắt tâm lý, không đọc thay tài liệu y khoa.
-3. The Duality Technique (Tư duy nhị nguyên): Luôn đối chiếu giữa "Cảm giác đời thường" vs "Dữ kiện y khoa thực tế".
+2. CẤM ĐẶT TÊN NHÂN VẬT ĐỊNH DANH (TUYỆT ĐỐI KHÔNG DỰNG TÊN GIẢ):
+   - CẤM dùng các tên riêng như "Chị Lan", "Anh Tuấn", "Bác Minh", "Cô Hoa", "chú chó Poodle của chị Lan"...
+   - BẮT BUỘC dùng ngôi thứ ba phi định danh hoặc Human Archetype: "Một người nuôi thú cưng...", "Một người ngoài 60...", "Nhiều gia đình...", "Một người thường xuyên...".
+3. CẤM TỰ BỊA TÊN BÁC SĨ (BẮT BUỘC DÙNG PLACEHOLDER CHỜ DUYỆT):
+   - BẮT BUỘC phải giữ nguyên chính xác dạng chữ: "bác sĩ [Tên bác sĩ], [chuyên khoa/chức danh]" và tag "[BÁC SĨ XÁC NHẬN]".
+   - TUYỆT ĐỐI CẤM tự ý bịa tên bác sĩ ảo (như "Bác sĩ CKII Trần Thị Thuý Tường" hay bất kỳ tên nào). Chỗ này để trống cho Biên tập viên và Hội đồng y khoa điền tên bác sĩ thật sau khi kiểm duyệt.
+4. Doctor is an anchor, not a narrator: Bác sĩ xuất hiện đúng 2 điểm chạm (Unlock & Decision) để gỡ nút thắt tâm lý, không đọc thay tài liệu y khoa.
+5. The Duality Technique (Tư duy nhị nguyên): Luôn đối chiếu giữa "Cảm giác đời thường" vs "Dữ kiện y khoa thực tế".
    - Sức bê hàng/lao động khỏe ≠ Huyết áp/đường huyết bình thường
-   - "Mệt do làm việc" = Lời bào chữa rất hợp lý để bỏ qua triệu chứng
-   - Thái cực 1 (Chủ quan bỏ bê) vs Thái cực 2 (Hoảng loạn đòi làm combo xét nghiệm đột quỵ)
-4. Anti-Overtesting (Chống thần thánh hóa xét nghiệm): Không có xét nghiệm đơn lẻ nào biết trước tương lai; bắt đầu từ việc cơ bản nhất (đo huyết áp, kiểm tra nguy cơ cá nhân).
-5. Ending Callback: Đoạn kết bắt buộc tái hiện lại cảnh đời thường ở mở bài và reframe lại định nghĩa chữ "Khỏe" / "An toàn".
+   - "Mệt do làm việc", "ngứa do ăn xoài" = Lời bào chữa rất hợp lý để bỏ qua triệu chứng
+   - Thái cực 1 (Chủ quan bỏ bê) vs Thái cực 2 (Hoảng loạn đòi làm combo xét nghiệm)
+6. Anti-Overtesting (Chống thần thánh hóa xét nghiệm): Không có xét nghiệm đơn lẻ nào biết trước tương lai; bắt đầu từ việc cơ bản nhất (đo huyết áp, kiểm tra nguy cơ cá nhân).
+7. Ending Callback: Đoạn kết bắt buộc tái hiện lại cảnh đời thường ở mở bài và reframe lại định nghĩa chữ "Khỏe" / "An toàn".
 
 ═══════════════════════════════════════════════════════════════
 BÀI MẪU CHUẨN MỰC (GOLD STANDARD BENCHMARK — PHẢI HỌC THEO VĂN PHONG NÀY)

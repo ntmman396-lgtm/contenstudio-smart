@@ -5,6 +5,9 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
+const { getTemplate } = require('./src/lib/templates');
+const templateDef = getTemplate('controlled-narrative');
+
 async function main() {
   console.log('🩺 Đang thêm template Controlled Narrative (Doctor Anchor V4) vào DB...\n');
 
@@ -16,7 +19,7 @@ async function main() {
     steps: JSON.stringify(['TERRITORY', 'CONTRADICTION', 'DOCTOR_ANCHOR', 'MEDICAL_SPINE', 'NARRATIVE_DRAFT']),
     estimatedWords: JSON.stringify({ min: 1200, max: 2000 }),
     sites: JSON.stringify(['nha-thuoc', 'tiem-chung']),
-    systemPrompt: 'Xem templates.ts — CONTROLLED_NARRATIVE.systemPrompt',
+    systemPrompt: templateDef ? templateDef.systemPrompt : 'Xem templates.ts',
     outline: JSON.stringify([
       {
         type: 'h2', label: 'Opening — Human Moment + Belief + Contradiction', fieldKey: 'narrativeOpening',
