@@ -1156,6 +1156,9 @@ NGUYÊN TẮC CỐT LÕI (CHỐNG VIẾT KHÔ, CHỐNG GIÁO TRÌNH)
    - Thái cực 1 (Chủ quan bỏ bê) vs Thái cực 2 (Hoảng loạn đòi làm combo xét nghiệm)
 6. Anti-Overtesting (Chống thần thánh hóa xét nghiệm): Không có xét nghiệm đơn lẻ nào biết trước tương lai; bắt đầu từ việc cơ bản nhất (đo huyết áp, kiểm tra nguy cơ cá nhân).
 7. Ending Callback: Đoạn kết bắt buộc tái hiện lại cảnh đời thường ở mở bài và reframe lại định nghĩa chữ "Khỏe" / "An toàn".
+8. QUY TẮC PHÂN CẤP HEADING (H2 → H3 — BẮT BUỘC ≥ 2 H3s):
+   - Nếu một mục H2 có chứa H3 thì BẮT BUỘC phải có từ 2 thẻ H3 trở lên (≥ 2 H3s) để phân chia ít nhất 2 khía cạnh, 2 nhóm đối tượng hoặc 2 bước rõ ràng.
+   - TUYỆT ĐỐI CẤM để 1 thẻ H2 chỉ có đúng 1 thẻ H3 đơn độc. Nếu chỉ có 1 ý con thì viết trực tiếp thành các đoạn văn dưới H2, không tạo thẻ H3 lẻ loi.
 
 ═══════════════════════════════════════════════════════════════
 BÀI MẪU CHUẨN MỰC (GOLD STANDARD BENCHMARK — PHẢI HỌC THEO VĂN PHONG NÀY)
@@ -1175,27 +1178,34 @@ Theo bác sĩ [Tên bác sĩ], [chuyên khoa/chức danh], [BÁC SĨ XÁC NHẬN
 Khoảng cách giữa “cảm thấy mình còn khỏe” và “biết các yếu tố nguy cơ của mình đang ở đâu” chính là điều bài viết này cần làm rõ.
 
 H2: Vẫn làm việc bình thường, vì sao chưa thể kết luận tim mạch đang ổn?
-... (Phân tích lý do vì sao công việc luôn cung cấp lời giải thích hợp lý cho sự khó chịu của cơ thể)
+H3: Vì sao công việc luôn cung cấp lời giải thích hợp lý cho sự khó chịu của cơ thể?
+... (Phân tích bẫy tâm lý quen thuộc của người lao động)
 H3: Khi nào “do làm nhiều” bắt đầu trở thành một giả định cần xem lại?
 ... (Chỉ ra cơ thể có đang khác với chính mình trước đây hay không, kèm bullet list dấu hiệu)
 
 H2: Có xét nghiệm nào biết trước mình sẽ bị đột quỵ?
+H3: Giới hạn của một xét nghiệm đơn lẻ trong dự đoán nguy cơ đột quỵ
 ... (Khẳng định không có xét nghiệm đơn lẻ nào dự đoán chắc chắn; Reframe câu hỏi từ 'xét nghiệm nào biết trước' sang 'tôi đang có những yếu tố nào làm tăng nguy cơ')
-H3: Những yếu tố nào thường được nhìn cùng nhau?
+H3: Những nhóm yếu tố nguy cơ thường được bác sĩ đánh giá cùng nhau
 ... (Bảng Table nhóm yếu tố nguy cơ & ý nghĩa; giải ảo tâm lý đòi mua combo xét nghiệm)
 
 H2: Nếu đã lâu chưa kiểm tra, nên bắt đầu từ đâu?
-... (Bắt đầu từ bước đơn giản nhất: biết huyết áp của mình. Bác sĩ Touchpoint #2: Không nhất thiết bắt đầu bằng danh sách dài xét nghiệm)
-H3: Trước khi đi khám, có thể tự rà lại những gì?
-... (Danh sách câu hỏi người đọc tự chuẩn bị trước khi gặp bác sĩ)
+H3: Điểm bắt đầu cơ bản: biết con số huyết áp của mình
+... (Bắt đầu từ bước đơn giản nhất: đo huyết áp. Bác sĩ Touchpoint #2: Không nhất thiết bắt đầu bằng danh sách dài xét nghiệm)
+H3: Những thông tin người đọc nên tự rà soát trước khi gặp bác sĩ
+... (Danh sách câu hỏi người đọc tự chuẩn bị trước khi đi khám)
 
 H2: Điện tâm đồ có phải cách để “tầm soát đột quỵ”?
+H3: Giá trị thực tế của điện tâm đồ trong phát hiện rối loạn nhịp
 ... (Phân tích giá trị và giới hạn của xét nghiệm)
-H3: Cần tránh hai thái cực nào?
+H3: Cần tránh hai thái cực nào khi tầm soát?
 ... (Thái cực 1: Tôi còn làm khỏe nên chưa cần khám vs Thái cực 2: Phải làm càng nhiều xét nghiệm càng tốt)
 
 H2: Khi nào không nên chờ đến lần khám định kỳ?
-... (Dấu hiệu cấp cứu FAST; Phân biệt rõ giữa 'đang đánh giá nguy cơ' vs 'biến cố cấp tính')
+H3: Dấu hiệu biến cố cấp tính cần cấp cứu ngay (Dấu hiệu FAST)
+... (Méo mặt, yếu tay chân, nói khó...)
+H3: Phân biệt giữa đánh giá nguy cơ định kỳ và xử trí khẩn cấp
+... (Hai tình huống cần hành động hoàn toàn khác nhau)
 
 H2: Có khi điều cần thay đổi trước tiên là cách mình định nghĩa chữ “khỏe”
 ... (Callback: Người đàn ông sáng mai vẫn thức dậy chạy xe, nhưng định nghĩa chữ Khỏe đã thay đổi: từ 'đợi cơ thể báo bệnh' sang 'chủ động biết điều gì cần kiểm soát trước')

@@ -123,7 +123,10 @@ ${isNarrative ? `8. ĐỘ DÀI VÀ CẤU TRÚC MỞ ĐẦU (NARRATIVE OPENING):
 9. QUY TẮC BẮT BUỘC VỀ NHÂN VẬT & BÁC SĨ (TUYỆT ĐỐI KHÔNG VI PHẠM):
    - CẤM ĐẶT TÊN NHÂN VẬT ĐỊNH DANH: Tuyệt đối KHÔNG được đặt tên riêng cho nhân vật (CẤM dùng "Chị Lan", "Anh Tuấn", "Bác Minh", "Cô Hoa", "chú chó Poodle của chị Lan"...). BẮT BUỘC dùng ngôi thứ ba phi định danh hoặc Human Archetype: "Một người nuôi thú cưng...", "Một người ngoài 60...", "Nhiều gia đình...", "Một người thường xuyên...".
    - CẤM TỰ BỊA TÊN BÁC SĨ (NO HALLUCINATED DOCTOR): BẮT BUỘC phải giữ nguyên chính xác placeholder dạng chữ: "bác sĩ [Tên bác sĩ], [chuyên khoa/chức danh]" và kèm theo tag "[BÁC SĨ XÁC NHẬN]". Tuyệt đối KHÔNG được tự ý điền bất kỳ tên bác sĩ giả/thật nào vào bài (CẤM tự điền "Bác sĩ Chuyên khoa II Trần Thị Thuý Tường" hay bất kỳ tên nào). Chỗ này để trống cho Biên tập viên điền tên bác sĩ thật sau khi kiểm duyệt.
-10. QUY TẮC ĐỊNH DẠNG VĂN PHONG NARRATIVE:
+10. QUY TẮC PHÂN CẤP HEADING (H2 → H3 — BẮT BUỘC ≥ 2 H3s):
+   - Nếu một mục H2 có chứa H3 thì BẮT BUỘC phải có từ 2 thẻ H3 trở lên (≥ 2 H3s) để phân chia ít nhất 2 khía cạnh, 2 nhóm đối tượng hoặc 2 bước thực hiện rõ ràng.
+   - TUYỆT ĐỐI CẤM để 1 thẻ H2 chỉ chứa đúng 1 thẻ H3 đơn độc. Nếu chỉ có 1 ý thì viết trực tiếp thành các đoạn văn dưới H2, không tạo thẻ H3 lẻ loi.
+11. QUY TẮC ĐỊNH DẠNG VĂN PHONG NARRATIVE:
    - Cho phép dùng <strong> CÓ CHỌN LỌC để nhấn mạnh các ý tưởng cốt lõi, cặp đối lập hoặc câu nói đời thường (VD: <strong>"tôi còn làm khỏe mà"</strong>, <strong>không có xét nghiệm đơn lẻ nào...</strong>).
    - Tuyệt đối TRÁNH giọng văn giáo trình/sách giáo khoa khô khan. Viết bằng giọng văn báo chí đời thường sâu sắc, giàu hình ảnh, phân tích tâm lý và thói quen con người.` : `8. ĐỘ DÀI ĐOẠN MỞ ĐẦU (TRƯỚC H2 ĐẦU TIÊN): Phần mở đầu dẫn dắt vào bài viết (nằm ở đầu tiên trong trường "content", trước thẻ <h2> đầu tiên) BẮT BUỘC chỉ được chứa tối đa 1 đoạn văn (chỉ duy nhất 1 thẻ <p>), độ dài cực kỳ ngắn gọn từ 2-3 câu (tổng số ≤100 từ). Tuyệt đối KHÔNG viết lan man hay tạo nhiều đoạn văn trước khi vào heading H2 đầu tiên.
 9. CẤM HOÀN TOÀN IN ĐẬM TRONG NỘI DUNG:
