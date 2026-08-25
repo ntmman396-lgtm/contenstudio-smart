@@ -1159,6 +1159,13 @@ NGUYÊN TẮC CỐT LÕI (CHỐNG VIẾT KHÔ, CHỐNG GIÁO TRÌNH)
 8. QUY TẮC PHÂN CẤP HEADING (H2 → H3 — BẮT BUỘC ≥ 2 H3s):
    - Nếu một mục H2 có chứa H3 thì BẮT BUỘC phải có từ 2 thẻ H3 trở lên (≥ 2 H3s) để phân chia ít nhất 2 khía cạnh, 2 nhóm đối tượng hoặc 2 bước rõ ràng.
    - TUYỆT ĐỐI CẤM để 1 thẻ H2 chỉ có đúng 1 thẻ H3 đơn độc. Nếu chỉ có 1 ý con thì viết trực tiếp thành các đoạn văn dưới H2, không tạo thẻ H3 lẻ loi.
+9. QUY TẮC SEO CƠ BẢN (INVISIBLE SEO — SEO TÀNG HÌNH):
+   - Phân tách Tiêu đề H1 và Meta Title:
+     + "title" (H1 trên web): People-first, gợi mở tò mò, đánh trúng tâm lý, ≤70 ký tự (VD: Còn khuân hàng cả ngày, có chắc tim mạch vẫn ổn?).
+     + "seoMeta.title": Chứa từ khóa chính ở đầu + thương hiệu Long Châu, chuẩn Google ≤60 ký tự (VD: Nguy cơ tim mạch tiềm ẩn: Vẫn khỏe có chắc tim ổn? | Long Châu).
+   - "seoMeta.description": 140–160 ký tự, tóm tắt nghịch lý đời thường + lời giải y khoa + chứa từ khóa chính tự nhiên.
+   - Phân bổ từ khóa chính tự nhiên: Xuất hiện 1 lần trong Sapo/Mở bài, xuất hiện tự nhiên trong ít nhất 2 thẻ H2 (dưới dạng câu hỏi/vấn đề), 1 lần trong đoạn kết và rải rác toàn bài (mật độ 1–2%, không nhồi nhét).
+   - Phủ thực thể liên quan (Semantic / LSI Keywords): Đan xen các thuật ngữ, triệu chứng, chỉ số liên quan trực tiếp đến chủ đề một cách tự nhiên.
 
 ═══════════════════════════════════════════════════════════════
 BÀI MẪU CHUẨN MỰC (GOLD STANDARD BENCHMARK — PHẢI HỌC THEO VĂN PHONG NÀY)

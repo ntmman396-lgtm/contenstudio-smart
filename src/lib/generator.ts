@@ -128,21 +128,28 @@ ${isNarrative ? `8. ĐỘ DÀI VÀ CẤU TRÚC MỞ ĐẦU (NARRATIVE OPENING):
    - TUYỆT ĐỐI CẤM để 1 thẻ H2 chỉ chứa đúng 1 thẻ H3 đơn độc. Nếu chỉ có 1 ý thì viết trực tiếp thành các đoạn văn dưới H2, không tạo thẻ H3 lẻ loi.
 11. QUY TẮC ĐỊNH DẠNG VĂN PHONG NARRATIVE:
    - Cho phép dùng <strong> CÓ CHỌN LỌC để nhấn mạnh các ý tưởng cốt lõi, cặp đối lập hoặc câu nói đời thường (VD: <strong>"tôi còn làm khỏe mà"</strong>, <strong>không có xét nghiệm đơn lẻ nào...</strong>).
-   - Tuyệt đối TRÁNH giọng văn giáo trình/sách giáo khoa khô khan. Viết bằng giọng văn báo chí đời thường sâu sắc, giàu hình ảnh, phân tích tâm lý và thói quen con người.` : `8. ĐỘ DÀI ĐOẠN MỞ ĐẦU (TRƯỚC H2 ĐẦU TIÊN): Phần mở đầu dẫn dắt vào bài viết (nằm ở đầu tiên trong trường "content", trước thẻ <h2> đầu tiên) BẮT BUỘC chỉ được chứa tối đa 1 đoạn văn (chỉ duy nhất 1 thẻ <p>), độ dài cực kỳ ngắn gọn từ 2-3 câu (tổng số ≤100 từ). Tuyệt đối KHÔNG viết lan man hay tạo nhiều đoạn văn trước khi vào heading H2 đầu tiên.
+   - Tuyệt đối TRÁNH giọng văn giáo trình/sách giáo khoa khô khan. Viết bằng giọng văn báo chí đời thường sâu sắc, giàu hình ảnh, phân tích tâm lý và thói quen con người.
+12. QUY TẮC SEO CƠ BẢN (INVISIBLE SEO — SEO TÀNG HÌNH):
+   - Phân tách Tiêu đề H1 và Meta Title:
+     + "title" (H1 trên web): People-first, gợi mở tò mò, đánh trúng tâm lý, ≤70 ký tự (VD: Còn khuân hàng cả ngày, có chắc tim mạch vẫn ổn?).
+     + "seoMeta.title": Chứa từ khóa chính ở đầu + thương hiệu Long Châu, chuẩn Google ≤60 ký tự (VD: Nguy cơ tim mạch tiềm ẩn: Vẫn khỏe có chắc tim ổn? | Long Châu).
+   - "seoMeta.description": 140–160 ký tự, tóm tắt nghịch lý đời thường + lời giải y khoa + chứa từ khóa chính tự nhiên.
+   - Phân bổ từ khóa chính tự nhiên: Xuất hiện 1 lần trong Sapo/Mở bài, xuất hiện tự nhiên trong ít nhất 2 thẻ H2 (dưới dạng câu hỏi/vấn đề), 1 lần trong đoạn kết và rải rác toàn bài (mật độ 1–2%, không nhồi nhét).
+   - Phủ thực thể liên quan (Semantic / LSI Keywords): Đan xen các thuật ngữ, triệu chứng, chỉ số liên quan trực tiếp đến chủ đề một cách tự nhiên.` : `8. ĐỘ DÀI ĐOẠN MỞ ĐẦU (TRƯỚC H2 ĐẦU TIÊN): Phần mở đầu dẫn dắt vào bài viết (nằm ở đầu tiên trong trường "content", trước thẻ <h2> đầu tiên) BẮT BUỘC chỉ được chứa tối đa 1 đoạn văn (chỉ duy nhất 1 thẻ <p>), độ dài cực kỳ ngắn gọn từ 2-3 câu (tổng số ≤100 từ). Tuyệt đối KHÔNG viết lan man hay tạo nhiều đoạn văn trước khi vào heading H2 đầu tiên.
 9. CẤM HOÀN TOÀN IN ĐẬM TRONG NỘI DUNG:
    - TUYỆT ĐỐI KHÔNG sử dụng thẻ <strong>, <b> bên trong nội dung đoạn văn <p>.
    - Toàn bộ text bên trong thẻ <p> phải là văn bản thuần (plain text), chỉ được phép dùng <em> (in nghiêng) và <a> (hyperlink).`}
-10. QUY CHUẨN TRÌNH BÀY NGUỒN THAM KHẢO (BẮT BUỘC TUÂN THỦ TRONG MẢNG REFERENCES):
+13. QUY CHUẨN TRÌNH BÀY NGUỒN THAM KHẢO (BẮT BUỘC TUÂN THỦ TRONG MẢNG REFERENCES):
    - Tuyệt đối KHÔNG sử dụng những link bị 404 hay link ảo không thể truy cập được.
    - Đối với Nguồn dạng sách/giáo trình: "Tác giả (năm). Tên tài liệu. Nơi xuất bản: Nhà xuất bản." (VD: Bộ Y tế (2020). Hướng dẫn chẩn đoán và điều trị... Hà Nội: NXB Y học)
    - Đối với Nguồn dạng website: "Tên nguồn - Tiêu đề: URL (truy cập ngày [NGÀY_HIỆN_TẠI])" (VD: WHO. Tăng huyết áp. https://... (truy cập ngày ${new Date().toLocaleDateString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' })}))
      + LƯU Ý QUAN TRỌNG 1: URL bắt buộc phải là link trực tiếp trỏ đến trang chi tiết của bài viết/nguồn đó (deep link), TUYỆT ĐỐI KHÔNG chỉ dẫn link về trang chủ (homepage) chung chung.
      + LƯU Ý QUAN TRỌNG 2: Cho phần Ngoặc đơn chứa ngày truy cập, BẮT BUỘC toàn bộ các nguồn website phải ghi chính xác là: "(truy cập ngày ${String(new Date().getDate()).padStart(2, '0')}/${String(new Date().getMonth() + 1).padStart(2, '0')}/${new Date().getFullYear()})" - TUYỆT ĐỐI KHÔNG tự bịa ngày tháng trong quá khứ!
-11. QUY TẮC LIÊN KẾT NỘI BỘ (INTERNAL LINK) GIỮA CÁC SITE:
+14. QUY TẮC LIÊN KẾT NỘI BỘ (INTERNAL LINK) GIỮA CÁC SITE:
     - Bài viết này đang được tạo cho site: ${settings.siteId === 'nha-thuoc' ? 'NHÀ THUỐC' : 'TIÊM CHỦNG'}.
     - TUYỆT ĐỐI KHÔNG chèn link chéo giữa hai hệ thống. Nghĩa là: Bài viết của Nhà Thuốc CẤM dẫn link sang Tiêm Chủng, và bài viết của Tiêm Chủng CẤM dẫn link sang Nhà Thuốc.
 ${settings.templateId === 'hoi-dap-bac-si' || settings.templateId === 'hoi-dap' ? `
-12. ĐỊNH DẠNG HỎI ĐÁP SỨC KHỎE (BẮT BUỘC):
+15. ĐỊNH DẠNG HỎI ĐÁP SỨC KHỎE (BẮT BUỘC):
    - KHÔNG sử dụng thẻ heading <h2> cho phần Câu hỏi và Giải đáp. THAY VÀO ĐÓ, bắt buộc dùng cấu trúc sau:
    <p><strong>Câu hỏi:</strong></p>
    <blockquote>
