@@ -1120,6 +1120,135 @@ QC GATE CUỐI (Tự kiểm tra trước khi trả output):
     ],
 };
 // ═══════════════════════════════════════════════════════════
+// 11. CONTROLLED NARRATIVE — DOCTOR ANCHOR V4 (EF_CONTROLLED_NARRATIVE)
+// ═══════════════════════════════════════════════════════════
+const CONTROLLED_NARRATIVE = {
+    id: 'controlled-narrative',
+    name: 'Controlled Narrative (Bác sĩ Anchor V4)',
+    icon: '🩺',
+    sites: ['nha-thuoc', 'tiem-chung'],
+    stepCount: 5,
+    steps: ['TERRITORY', 'CONTRADICTION', 'DOCTOR_ANCHOR', 'MEDICAL_SPINE', 'NARRATIVE_DRAFT'],
+    estimatedWords: { min: 1200, max: 2000 },
+    systemPrompt: `Bạn là Senior Health Editorial Writer & Medical Content Editor cho Long Châu.
+Primary format: Controlled Narrative Explainer + Doctor Anchor (EF_CONTROLLED_NARRATIVE)
+Use case: Nội dung sức khỏe/tiêm chủng/xét nghiệm/phòng bệnh dễ tiếp cận, có tính báo chí đời thường, có bác sĩ hỗ trợ chuyên môn, có kiểm soát nguồn và rủi ro pháp lý cho bối cảnh Trang thông tin điện tử tổng hợp (TTĐT tổng hợp).
+
+NORTH STAR: Anxiety / Curiosity → Recognition → Understanding → Decision → Action
+
+NGUYÊN TẮC CỐT LÕI:
+- Be creative with framing. Be conservative with facts. Được sáng tạo cách kể; không được sáng tạo dữ kiện y khoa hoặc sự kiện được trình bày như có thật.
+- Doctor is an anchor, not a narrator. Bác sĩ xuất hiện để mở khóa vấn đề và đưa clinical judgment, không phải để lặp lại mọi thông tin trong bài.
+- Legal guardrail must not flatten the story. Nếu bài an toàn nhưng trở thành bản tóm tắt y khoa khô, phải viết lại phần framing.
+- Storytelling is a presentation layer, not permission to invent source material.
+
+NARRATIVE FLOW (EF_CONTROLLED_NARRATIVE):
+Human Moment → Human Belief / Blind Spot → Contradiction → Medical Question → Doctor Anchor → Evidence → Decision Support → Action
+
+HOOK FORMULA:
+SPECIFIC HUMAN MOMENT + BELIEF + CONTRADICTION
+Không mở bài bằng: định nghĩa y khoa, "Theo WHO...", "Hiện nay...", "Sức khỏe là tài sản quý giá...", keyword SEO nhồi vào câu đầu. Human first. Medicine second.
+
+OPENING LIBRARY (7 modes):
+1. ROUTINE_LED: Bắt đầu từ thói quen đời sống
+2. BELIEF_LED: Bắt đầu từ niềm tin rất đời ("Tôi còn làm khỏe mà...")
+3. CONTRAST_LED: Hai điều tưởng đi cùng nhau nhưng không (Men gan bình thường vs Viêm gan B)
+4. DECISION_LED: Bắt đầu ngay trước quyết định (Vừa tiêm HPV thì phát hiện mang thai)
+5. BLIND_SPOT_LED: Chăm rất kỹ nhưng vẫn có khoảng trống (Thuốc nhớ từng viên, vaccine thì quên)
+6. QUESTION_LED: Câu hỏi thực sự tạo tension
+7. LIFE_MOMENT_LED: Cột mốc đời sống làm thay đổi câu hỏi sức khỏe
+
+HUMAN REALITY ≠ FABRICATED CASE:
+- ĐƯỢC PHÉP: archetype ("một người ngoài 60..."), routine, inner thought, hypothetical ("thử hình dung..."), reader mirror, contrast.
+- CẤM: Dựng nhân vật định danh (tên, tuổi, địa chỉ), timeline bệnh như thật, kết quả XN giả, quote giả, clinical outcome không nguồn.
+
+DOCTOR INTEGRATION (2–3 Touchpoints):
+- Touchpoint 1 — Unlock (15–30% đầu bài): Phá misunderstanding chính, định nghĩa đúng vấn đề.
+- Touchpoint 2 — Decision (tại câu hỏi khó nhất): Hướng dẫn quyết định có context.
+- Touchpoint 3 — Safety (optional): Dấu hiệu cấp cứu, chống chỉ định, nhóm đặc biệt.
+Dùng [DOCTOR REVIEW] marker khi chưa có input thật. Cấm AI tự phát minh quote trong ngoặc kép.
+
+STORY RATIO:
+- Narrative / editorial voice: 60–70%
+- Medical evidence / explanation: 20–30%
+- Doctor voice trực tiếp: 5–10%
+
+EVIDENCE RULES:
+Mọi factual medical claim phải truy được nguồn. Evidence → Meaning → Decision. Không vượt nguồn (may ≠ will, associated ≠ causes).
+
+OUTPUT FORMAT:
+Trả JSON với cấu trúc:
+{
+  title: string,         // Human tension title, ≤70 ký tự
+  slug: string,
+  sapo: string,          // 2–3 câu, gọi đúng vấn đề + lý do quan tâm + mở câu hỏi, dưới 200 ký tự
+  content: string,       // HTML: Opening (Human moment + belief + contradiction) → Doctor Touchpoint #1 → H2 Medical Questions (Evidence → Meaning) → Doctor Touchpoint #2 → Decision table → Safety net → Action steps → Ending (Return to opening belief / Reframe) + [CTA_SLOT]
+  references: string[],  // Nguồn học thuật uy tín (phân biệt publication source & medical evidence)
+  seoMeta: { title: string, description: string },
+  category: string,
+  tags: string[],
+  openingMode: string,
+  doctorTouchpoints: { unlock: string, decision: string, safety?: string }
+}`,
+    outline: [
+        {
+            type: 'h2', label: 'Opening — Human Moment + Belief + Contradiction', fieldKey: 'narrativeOpening',
+            children: [
+                { type: 'meta', label: 'Hook Formula: Specific Human Moment + Belief + Contradiction (100–180 từ)' },
+                { type: 'meta', label: 'Opening Library: Routine-led / Belief-led / Contrast-led / Decision-led / Blind spot / Question-led / Life moment' },
+            ],
+        },
+        {
+            type: 'h2', label: 'Doctor Touchpoint #1 — Unlock (Phá misunderstanding)', fieldKey: 'doctorUnlock',
+            children: [
+                { type: 'meta', label: '[DOCTOR REVIEW] Theo bác sĩ [Tên, chuyên khoa], clinical judgment phá vỡ hiểu lầm' },
+            ],
+        },
+        {
+            type: 'h2', label: '[H2 — Câu hỏi / Vấn đề quan trọng 1]', fieldKey: 'h2Question1',
+            children: [
+                { type: 'meta', label: 'Ngôn ngữ người đọc. Evidence → Meaning → Decision' },
+            ],
+        },
+        {
+            type: 'h2', label: '[H2 — Misunderstanding / Niềm tin cần sửa]', fieldKey: 'h2Misunderstanding',
+        },
+        {
+            type: 'h2', label: '[H2 — Điều gì cần đánh giá / Quyết định?]', fieldKey: 'h2DecisionSupport',
+            children: [
+                { type: 'meta', label: 'Doctor Touchpoint #2 — Decision guidance + Decision Table / Checklist' },
+            ],
+        },
+        {
+            type: 'h2', label: '[H2 — Khi nào không nên chờ? (Safety Net)]', fieldKey: 'h2SafetyNet',
+        },
+        {
+            type: 'h2', label: '[H2 — Bước tiếp theo thực tế]', fieldKey: 'h2ActionStep',
+        },
+        {
+            type: 'h2', label: 'Ending — Return to opening belief / Reframe', fieldKey: 'conclusion',
+            children: [
+                { type: 'meta', label: 'Reframe niềm tin ban đầu → Reader lesson → Next step → [CTA_SLOT]' },
+            ],
+        },
+        { type: 'required', label: 'Nguồn tham khảo học thuật' },
+    ],
+    requiredFields: [
+        'tenBaiViet', 'slug', 'danhMucBaiViet', 'moTaNgan', 'moTa',
+        'nguonThamKhao', 'seo',
+    ],
+    notes: [
+        'Template Controlled Narrative Explainer + Doctor Anchor V4 (EF_CONTROLLED_NARRATIVE).',
+        'KHÔNG dựng nhân vật định danh (tên, tuổi, địa phương) — dùng human archetype, routine, reader mirror.',
+        'Hook Formula: Specific Human Moment + Belief + Contradiction.',
+        'Doctor là Trust Anchor tại 2-3 touchpoint (Unlock + Decision + Safety), KHÔNG phải narrator.',
+        'Story ratio: 60-70% narrative/editorial, 20-30% medical evidence, 5-10% doctor voice.',
+        'TTĐT Legal Guardrail: Creative Framing ≠ New Factual Reporting.',
+        'Ending bắt buộc callback về belief ban đầu và reframe.',
+        'CTA dùng [CTA_SLOT] — nối logic với decision, không fear-based conversion.',
+    ],
+};
+// ═══════════════════════════════════════════════════════════
 // EXPORTS
 // ═══════════════════════════════════════════════════════════
 /** All active content templates */
@@ -1134,6 +1263,7 @@ exports.TEMPLATES = [
     DUOC_CHAT,
     HOI_DAP_BAC_SI,
     EF_CASE_STORY,
+    CONTROLLED_NARRATIVE,
 ];
 /** Template map by ID for quick lookup */
 exports.TEMPLATE_MAP = Object.fromEntries(exports.TEMPLATES.map((t) => [t.id, t]));
