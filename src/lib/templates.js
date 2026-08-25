@@ -1136,59 +1136,73 @@ Use case: Nội dung sức khỏe/tiêm chủng/xét nghiệm/phòng bệnh dễ
 
 NORTH STAR: Anxiety / Curiosity → Recognition → Understanding → Decision → Action
 
-NGUYÊN TẮC CỐT LÕI:
-- Be creative with framing. Be conservative with facts. Được sáng tạo cách kể; không được sáng tạo dữ kiện y khoa hoặc sự kiện được trình bày như có thật.
-- Doctor is an anchor, not a narrator. Bác sĩ xuất hiện để mở khóa vấn đề và đưa clinical judgment, không phải để lặp lại mọi thông tin trong bài.
-- Legal guardrail must not flatten the story. Nếu bài an toàn nhưng trở thành bản tóm tắt y khoa khô, phải viết lại phần framing.
-- Storytelling is a presentation layer, not permission to invent source material.
+═══════════════════════════════════════════════════════════════
+NGUYÊN TẮC CỐT LÕI (CHỐNG VIẾT KHÔ, CHỐNG GIÁO TRÌNH)
+═══════════════════════════════════════════════════════════════
+1. Be creative with framing. Be conservative with facts: Sáng tạo góc nhìn và cách dẫn chuyện đời thường; KHÔNG sáng tạo dữ kiện y khoa.
+2. Doctor is an anchor, not a narrator: Bác sĩ xuất hiện đúng 2 điểm chạm (Unlock & Decision) để gỡ nút thắt tâm lý, không đọc thay tài liệu y khoa.
+3. The Duality Technique (Tư duy nhị nguyên): Luôn đối chiếu giữa "Cảm giác đời thường" vs "Dữ kiện y khoa thực tế".
+   - Sức bê hàng/lao động khỏe ≠ Huyết áp/đường huyết bình thường
+   - "Mệt do làm việc" = Lời bào chữa rất hợp lý để bỏ qua triệu chứng
+   - Thái cực 1 (Chủ quan bỏ bê) vs Thái cực 2 (Hoảng loạn đòi làm combo xét nghiệm đột quỵ)
+4. Anti-Overtesting (Chống thần thánh hóa xét nghiệm): Không có xét nghiệm đơn lẻ nào biết trước tương lai; bắt đầu từ việc cơ bản nhất (đo huyết áp, kiểm tra nguy cơ cá nhân).
+5. Ending Callback: Đoạn kết bắt buộc tái hiện lại cảnh đời thường ở mở bài và reframe lại định nghĩa chữ "Khỏe" / "An toàn".
 
-NARRATIVE FLOW (EF_CONTROLLED_NARRATIVE):
-Human Moment → Human Belief / Blind Spot → Contradiction → Medical Question → Doctor Anchor → Evidence → Decision Support → Action
+═══════════════════════════════════════════════════════════════
+BÀI MẪU CHUẨN MỰC (GOLD STANDARD BENCHMARK — PHẢI HỌC THEO VĂN PHONG NÀY)
+═══════════════════════════════════════════════════════════════
+Tiêu đề: Còn khuân hàng cả ngày, có chắc tim mạch vẫn ổn?
 
-HOOK FORMULA:
-SPECIFIC HUMAN MOMENT + BELIEF + CONTRADICTION
-Không mở bài bằng: định nghĩa y khoa, "Theo WHO...", "Hiện nay...", "Sức khỏe là tài sản quý giá...", keyword SEO nhồi vào câu đầu. Human first. Medicine second.
+Sapo: Vẫn chạy xe, bê hàng, làm việc từ sáng đến chiều thường tạo cảm giác rằng sức khỏe còn tốt. Nhưng khả năng lao động không thể cho biết huyết áp đang ở mức nào, đường huyết đã thay đổi chưa hay những yếu tố nguy cơ tim mạch nào đang tồn tại mà cơ thể chưa biểu hiện rõ.
 
-OPENING LIBRARY (7 modes):
-1. ROUTINE_LED: Bắt đầu từ thói quen đời sống
-2. BELIEF_LED: Bắt đầu từ niềm tin rất đời ("Tôi còn làm khỏe mà...")
-3. CONTRAST_LED: Hai điều tưởng đi cùng nhau nhưng không (Men gan bình thường vs Viêm gan B)
-4. DECISION_LED: Bắt đầu ngay trước quyết định (Vừa tiêm HPV thì phát hiện mang thai)
-5. BLIND_SPOT_LED: Chăm rất kỹ nhưng vẫn có khoảng trống (Thuốc nhớ từng viên, vaccine thì quên)
-6. QUESTION_LED: Câu hỏi thực sự tạo tension
-7. LIFE_MOMENT_LED: Cột mốc đời sống làm thay đổi câu hỏi sức khỏe
+*Tình huống mở đầu mang tính minh họa, không đại diện cho một cá nhân cụ thể.*
 
-HUMAN REALITY ≠ FABRICATED CASE:
-- ĐƯỢC PHÉP: archetype ("một người ngoài 60..."), routine, inner thought, hypothetical ("thử hình dung..."), reader mirror, contrast.
-- CẤM: Dựng nhân vật định danh (tên, tuổi, địa chỉ), timeline bệnh như thật, kết quả XN giả, quote giả, clinical outcome không nguồn.
+Một người đàn ông ngoài 60 vẫn có thể bắt đầu ngày làm việc từ sáng sớm, chạy xe giao hàng, tự tay chuyển từng thùng xuống xe rồi tiếp tục công việc đến cuối chiều. Sau một ngày ngoài đường, đôi lúc ông thấy mệt hoặc hơi choáng, nhưng điều đó nghe cũng chẳng có gì quá bất thường: làm việc nhiều thì mệt, trời nóng thì choáng, ngủ ít thì đau đầu. Khi vẫn ăn được, ngủ được và hôm sau vẫn đủ sức đi làm, suy nghĩ “tôi còn làm khỏe mà” nghe hoàn toàn hợp lý.
 
-DOCTOR INTEGRATION (2–3 Touchpoints):
-- Touchpoint 1 — Unlock (15–30% đầu bài): Phá misunderstanding chính, định nghĩa đúng vấn đề.
-- Touchpoint 2 — Decision (tại câu hỏi khó nhất): Hướng dẫn quyết định có context.
-- Touchpoint 3 — Safety (optional): Dấu hiệu cấp cứu, chống chỉ định, nhóm đặc biệt.
-Dùng [DOCTOR REVIEW] marker khi chưa có input thật. Cấm AI tự phát minh quote trong ngoặc kép.
+Chính cách tự đánh giá rất đời thường ấy lại để lại một khoảng trống. Sức bê được một thùng hàng không cho biết huyết áp hiện tại là bao nhiêu; việc vẫn đi hết một ngày làm việc cũng không thể cho biết đường huyết hay cholesterol đang ở mức nào. Một người có thể cảm nhận khá rõ mình còn đủ sức làm việc hay không, nhưng có những yếu tố nguy cơ tim mạch gần như không thể nhận biết chính xác chỉ bằng cảm giác.
 
-STORY RATIO:
-- Narrative / editorial voice: 60–70%
-- Medical evidence / explanation: 20–30%
-- Doctor voice trực tiếp: 5–10%
+Theo bác sĩ [Tên bác sĩ], [chuyên khoa/chức danh], [BÁC SĨ XÁC NHẬN] thể lực hiện tại và nguy cơ tim mạch là hai vấn đề có liên quan nhưng không thể đánh đồng. Một người vẫn có thể sinh hoạt, lao động bình thường trong khi một số yếu tố nguy cơ chưa tạo ra biểu hiện đủ rõ để bản thân nhận biết.
 
-EVIDENCE RULES:
-Mọi factual medical claim phải truy được nguồn. Evidence → Meaning → Decision. Không vượt nguồn (may ≠ will, associated ≠ causes).
+Khoảng cách giữa “cảm thấy mình còn khỏe” và “biết các yếu tố nguy cơ của mình đang ở đâu” chính là điều bài viết này cần làm rõ.
 
-OUTPUT FORMAT:
-Trả JSON với cấu trúc:
+H2: Vẫn làm việc bình thường, vì sao chưa thể kết luận tim mạch đang ổn?
+... (Phân tích lý do vì sao công việc luôn cung cấp lời giải thích hợp lý cho sự khó chịu của cơ thể)
+H3: Khi nào “do làm nhiều” bắt đầu trở thành một giả định cần xem lại?
+... (Chỉ ra cơ thể có đang khác với chính mình trước đây hay không, kèm bullet list dấu hiệu)
+
+H2: Có xét nghiệm nào biết trước mình sẽ bị đột quỵ?
+... (Khẳng định không có xét nghiệm đơn lẻ nào dự đoán chắc chắn; Reframe câu hỏi từ 'xét nghiệm nào biết trước' sang 'tôi đang có những yếu tố nào làm tăng nguy cơ')
+H3: Những yếu tố nào thường được nhìn cùng nhau?
+... (Bảng Table nhóm yếu tố nguy cơ & ý nghĩa; giải ảo tâm lý đòi mua combo xét nghiệm)
+
+H2: Nếu đã lâu chưa kiểm tra, nên bắt đầu từ đâu?
+... (Bắt đầu từ bước đơn giản nhất: biết huyết áp của mình. Bác sĩ Touchpoint #2: Không nhất thiết bắt đầu bằng danh sách dài xét nghiệm)
+H3: Trước khi đi khám, có thể tự rà lại những gì?
+... (Danh sách câu hỏi người đọc tự chuẩn bị trước khi gặp bác sĩ)
+
+H2: Điện tâm đồ có phải cách để “tầm soát đột quỵ”?
+... (Phân tích giá trị và giới hạn của xét nghiệm)
+H3: Cần tránh hai thái cực nào?
+... (Thái cực 1: Tôi còn làm khỏe nên chưa cần khám vs Thái cực 2: Phải làm càng nhiều xét nghiệm càng tốt)
+
+H2: Khi nào không nên chờ đến lần khám định kỳ?
+... (Dấu hiệu cấp cứu FAST; Phân biệt rõ giữa 'đang đánh giá nguy cơ' vs 'biến cố cấp tính')
+
+H2: Có khi điều cần thay đổi trước tiên là cách mình định nghĩa chữ “khỏe”
+... (Callback: Người đàn ông sáng mai vẫn thức dậy chạy xe, nhưng định nghĩa chữ Khỏe đã thay đổi: từ 'đợi cơ thể báo bệnh' sang 'chủ động biết điều gì cần kiểm soát trước')
+
+═══════════════════════════════════════════════════════════════
+CẤU TRÚC JSON OUTPUT YÊU CẦU:
+═══════════════════════════════════════════════════════════════
 {
-  title: string,         // Human tension title, ≤70 ký tự
-  slug: string,
-  sapo: string,          // 2–3 câu, gọi đúng vấn đề + lý do quan tâm + mở câu hỏi, dưới 200 ký tự
-  content: string,       // HTML: Opening (Human moment + belief + contradiction) → Doctor Touchpoint #1 → H2 Medical Questions (Evidence → Meaning) → Doctor Touchpoint #2 → Decision table → Safety net → Action steps → Ending (Return to opening belief / Reframe) + [CTA_SLOT]
-  references: string[],  // Nguồn học thuật uy tín (phân biệt publication source & medical evidence)
-  seoMeta: { title: string, description: string },
-  category: string,
-  tags: string[],
-  openingMode: string,
-  doctorTouchpoints: { unlock: string, decision: string, safety?: string }
+  "title": "string — Human tension title, ≤70 ký tự (VD: Còn khuân hàng cả ngày, có chắc tim mạch vẫn ổn?)",
+  "slug": "string — không dấu, nối dấu gạch ngang",
+  "sapo": "string — 2–3 câu, đối chiếu cảm giác đời thường vs dữ kiện y khoa, <200 ký tự",
+  "content": "string — TOÀN BỘ HTML bài viết: Opening 4 đoạn có italic disclosure -> H2 -> H3 -> Bảng Table -> Doctor Touchpoints -> Safety Net -> Ending Callback -> [CTA_SLOT]",
+  "references": ["string — nguồn học thuật: AHA, CDC, USPSTF, WHO, Bộ Y tế"],
+  "seoMeta": { "title": "string ≤60 ký tự", "description": "string ≤160 ký tự" },
+  "category": "string",
+  "tags": ["string"]
 }`,
     outline: [
         {
